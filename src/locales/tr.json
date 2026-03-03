@@ -817,8 +817,7 @@
         "monitoring": "Izleme",
         "base": "Us",
         "nuclear": "Nukleer",
-        "aircraftAirborne": "Ucak (Havada)",
-        "aircraftGround": "Ucak (Yerde)"
+        "aircraft": "Uçak"
       },
       "layerGuide": "Katman Rehberi",
       "layersTitle": "Katmanlar",

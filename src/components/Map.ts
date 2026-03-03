@@ -2446,8 +2446,8 @@ export class MapComponent {
         div.style.left = `${pt[0]}px`;
         div.style.top = `${pt[1]}px`;
         div.style.transform = `rotate(${ac.trackDeg}deg)`;
-        div.style.fontSize = '8px';
-        div.style.color = ac.onGround ? '#888' : '#60a0ff';
+        div.style.fontSize = '12px';
+        div.style.color = ac.onGround ? '#888' : '#a064ff';
         div.style.lineHeight = '1';
         div.style.pointerEvents = 'auto';
         div.style.cursor = 'pointer';

@@ -43,7 +43,7 @@ function buildSimulatedPositions(icao24: string, callsign: string, swLat: number
     const now = Date.now();
     const latSpan = neLat - swLat;
     const lonSpan = neLon - swLon;
-    const count = latSpan > 0 && lonSpan > 0 ? Math.floor(Math.random() * 8) + 3 : 3;
+    const count = latSpan > 0 && lonSpan > 0 ? Math.floor(Math.random() * 16) + 15 : 10;
 
     return Array.from({ length: count }, (_, i) => ({
         icao24: icao24 || `3c${(0x6543 + i).toString(16)}`,
@@ -58,6 +58,27 @@ function buildSimulatedPositions(icao24: string, callsign: string, swLat: number
         source: 'POSITION_SOURCE_SIMULATED' as const,
         observedAt: now,
     }));
+}
+
+const OPENSKY_PUBLIC_BASE = 'https://opensky-network.org/api';
+
+async function fetchOpenSkyAnonymous(req: TrackAircraftRequest): Promise<PositionSample[]> {
+    let url: string;
+    if (req.swLat && req.neLat) {
+        url = `${OPENSKY_PUBLIC_BASE}/states/all?lamin=${req.swLat}&lomin=${req.swLon}&lamax=${req.neLat}&lomax=${req.neLon}`;
+    } else if (req.icao24) {
+        url = `${OPENSKY_PUBLIC_BASE}/states/all?icao24=${req.icao24}`;
+    } else {
+        url = `${OPENSKY_PUBLIC_BASE}/states/all`;
+    }
+
+    const resp = await fetch(url, {
+        signal: AbortSignal.timeout(12_000),
+        headers: { 'Accept': 'application/json' },
+    });
+    if (!resp.ok) throw new Error(`OpenSky anonymous HTTP ${resp.status}`);
+    const data = await resp.json() as OpenSkyResponse;
+    return parseOpenSkyStates(data.states ?? []);
 }
 
 export async function trackAircraft(
@@ -76,6 +97,21 @@ export async function trackAircraft(
 
     const relayBase = getRelayBaseUrl();
     if (!relayBase) {
+        // Try direct OpenSky anonymous API (no auth needed, ~10 req/min limit)
+        try {
+            const directPositions = await fetchOpenSkyAnonymous(req);
+            if (directPositions.length > 0) {
+                cachedPositions = directPositions;
+                cacheTs = now;
+                let filtered = directPositions;
+                if (req.icao24) filtered = filtered.filter(p => p.icao24 === req.icao24);
+                if (req.callsign) filtered = filtered.filter(p => p.callsign.includes(req.callsign.toUpperCase()));
+                return { positions: filtered, source: 'opensky-anonymous', updatedAt: now };
+            }
+        } catch (err) {
+            console.warn(`[Aviation] Direct OpenSky anonymous failed: ${err instanceof Error ? err.message : err}`);
+        }
+        // Fall back to simulated data
         const positions = buildSimulatedPositions(req.icao24, req.callsign, req.swLat, req.swLon, req.neLat, req.neLon);
         return { positions, source: 'simulated', updatedAt: now };
     }

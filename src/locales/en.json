@@ -883,8 +883,7 @@
         "monitoring": "Monitoring",
         "base": "Base",
         "nuclear": "Nuclear",
-        "aircraftAirborne": "Aircraft (Airborne)",
-        "aircraftGround": "Aircraft (Ground)"
+        "aircraft": "Aircraft"
       },
       "layerGuide": "Layer Guide",
       "layersTitle": "Layers",

@@ -249,8 +249,8 @@ const MARKER_ICONS = {
   circle: 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="white"/></svg>`),
   // Star - for special markers
   star: 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><polygon points="16,2 20,12 30,12 22,19 25,30 16,23 7,30 10,19 2,12 12,12" fill="white"/></svg>`),
-  // Plane arrow - for aircraft positions (pointing north, rotated by trackDeg)
-  plane: 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><polygon points="16,2 22,28 16,22 10,28" fill="white"/></svg>`),
+  // Airplane silhouette - top-down with wings and tail (pointing north, rotated by trackDeg)
+  plane: 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 2 L17.5 10 L17 12 L27 17 L27 19 L17 16 L17 24 L20 26.5 L20 28 L16 27 L12 28 L12 26.5 L15 24 L15 16 L5 19 L5 17 L15 12 L14.5 10 Z" fill="white"/></svg>`),
 };
 
 const BASES_ICON_MAPPING = { triangleUp: { x: 0, y: 0, width: 32, height: 32, mask: true } };
@@ -1600,16 +1600,14 @@ export class DeckGLMap {
       getIcon: () => 'plane',
       iconAtlas: MARKER_ICONS.plane,
       iconMapping: AIRCRAFT_ICON_MAPPING,
-      getSize: (d) => d.onGround ? 8 : 12,
+      getSize: (d) => d.onGround ? 14 : 18,
       getColor: (d) => {
-        if (d.onGround) return [120, 120, 120, 180] as [number, number, number, number];
-        if (d.altitudeFt < 10000) return [0, 200, 200, 200] as [number, number, number, number];
-        if (d.altitudeFt < 25000) return [60, 130, 255, 200] as [number, number, number, number];
-        return [140, 80, 255, 200] as [number, number, number, number];
+        if (d.onGround) return [120, 120, 120, 160] as [number, number, number, number];
+        return [160, 100, 255, 220] as [number, number, number, number]; // Purple for all airborne
       },
       getAngle: (d) => -d.trackDeg,
-      sizeMinPixels: 4,
-      sizeMaxPixels: 20,
+      sizeMinPixels: 8,
+      sizeMaxPixels: 28,
       sizeScale: 1,
       pickable: true,
       billboard: false,
@@ -3591,8 +3589,7 @@ export class DeckGLMap {
           { shape: shapes.triangle('rgb(68, 136, 255)'), label: t('components.deckgl.legend.base') },
           { shape: shapes.hexagon(isLight ? 'rgb(180, 120, 0)' : 'rgb(255, 220, 0)'), label: t('components.deckgl.legend.nuclear') },
           { shape: shapes.square('rgb(136, 68, 255)'), label: t('components.deckgl.legend.datacenter') },
-          { shape: shapes.circle('rgb(60, 130, 255)'), label: t('components.deckgl.legend.aircraftAirborne') },
-          { shape: shapes.circle('rgb(120, 120, 120)'), label: t('components.deckgl.legend.aircraftGround') },
+          { shape: shapes.circle('rgb(160, 100, 255)'), label: t('components.deckgl.legend.aircraft') },
         ];
 
     legend.innerHTML = `
@@ -4047,7 +4044,7 @@ export class DeckGLMap {
     if (!this.maplibreMap) return;
     if (!this.state.layers.flights) return;
     const zoom = this.maplibreMap.getZoom();
-    if (zoom < 4) {
+    if (zoom < 2) {
       if (this.aircraftPositions.length > 0) {
         this.aircraftPositions = [];
         this.render();
