@@ -535,7 +535,7 @@ export class GlobeMap {
   }
 
   private createLayerToggles(): void {
-    const layers: Array<{ key: string; label: string; icon: string }> = [
+    const layers: Array<{ key: keyof MapLayers; label: string; icon: string }> = [
       // Conflict & Security
       { key: 'iranAttacks',  label: 'Iran Threat Activity',  icon: '&#127919;' },
       { key: 'hotspots',     label: 'Intel Hotspots',        icon: '&#127919;' },
@@ -582,7 +582,7 @@ export class GlobeMap {
       <div class="toggle-list" style="max-height:32vh;overflow-y:auto;scrollbar-width:thin;">
         ${layers.map(({ key, label, icon }) => `
           <label class="layer-toggle" data-layer="${key}">
-            <input type="checkbox" ${(this.layers as any)[key] ? 'checked' : ''}>
+            <input type="checkbox" ${this.layers[key] ? 'checked' : ''}>
             <span class="toggle-icon">${icon}</span>
             <span class="toggle-label">${label}</span>
           </label>`).join('')}
@@ -591,12 +591,12 @@ export class GlobeMap {
 
     el.querySelectorAll('.layer-toggle input').forEach(input => {
       input.addEventListener('change', () => {
-        const layer = (input as HTMLInputElement).closest('.layer-toggle')?.getAttribute('data-layer');
+        const layer = (input as HTMLInputElement).closest('.layer-toggle')?.getAttribute('data-layer') as keyof MapLayers | null;
         if (layer) {
           const checked = (input as HTMLInputElement).checked;
-          (this.layers as any)[layer] = checked;
+          this.layers[layer] = checked;
           this.flushMarkers();
-          this.onLayerChangeCb?.(layer as keyof MapLayers, checked, 'user');
+          this.onLayerChangeCb?.(layer, checked, 'user');
         }
       });
     });
@@ -634,10 +634,10 @@ export class GlobeMap {
     }
     if (this.layers.weather) markers.push(...this.weatherMarkers);
     if (this.layers.natural) markers.push(...this.naturalMarkers);
-    if ((this.layers as any).iranAttacks) markers.push(...this.iranMarkers);
+    if (this.layers.iranAttacks) markers.push(...this.iranMarkers);
     if (this.layers.outages) markers.push(...this.outageMarkers);
     if (this.layers.cyberThreats) markers.push(...this.cyberMarkers);
-    if ((this.layers as any).fires) markers.push(...this.fireMarkers);
+    if (this.layers.fires) markers.push(...this.fireMarkers);
     if (this.layers.protests) markers.push(...this.protestMarkers);
 
     this.globe.htmlElementsData(markers);
