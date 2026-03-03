@@ -24,11 +24,26 @@ export async function getCarrierOps(
                 // Fetch flights for each airport
                 const allFlights: import('../../../../src/generated/server/worldmonitor/aviation/v1/service_server').FlightInstance[] = [];
 
-                for (const airport of airports) {
-                    try {
-                        const resp = await listAirportFlights(ctx, { airport, direction: 'FLIGHT_DIRECTION_DEPARTURE', limit: 50 });
-                        allFlights.push(...resp.flights.map(f => ({ ...f, _airport: airport })));
-                    } catch { /* continue */ }
+                const flightPromises = airports.map(airport =>
+                    listAirportFlights(ctx, {
+                        airport,
+                        direction: 'FLIGHT_DIRECTION_DEPARTURE',
+                        limit: 50,
+                    }).then(resp => ({
+                        airport,
+                        flights: resp.flights,
+                    })),
+                );
+
+                const flightResults = await Promise.allSettled(flightPromises);
+
+                for (const result of flightResults) {
+                    if (result.status !== 'fulfilled') {
+                        // Ignore per-airport failures to match previous behavior
+                        continue;
+                    }
+                    const { airport, flights } = result.value;
+                    allFlights.push(...flights.map(f => ({ ...f, _airport: airport })));
                 }
 
                 // Group by carrier.iataCode + airport
