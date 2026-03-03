@@ -23,9 +23,9 @@ message PositionSample {
   // ATC callsign (e.g., "THY7CX").
   string callsign = 2;
   // Latitude in decimal degrees.
-  double latitude = 3;
+  double lat = 3;
   // Longitude in decimal degrees.
-  double longitude = 4;
+  double lon = 4;
   // Barometric altitude in metres.
   double altitude_m = 5;
   // Ground speed in knots.
