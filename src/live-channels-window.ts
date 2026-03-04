@@ -74,7 +74,7 @@ export async function initLiveChannelsWindow(containerEl?: HTMLElement): Promise
   for (const c of filteredChannels) optionalChannelMap.set(c.id, c);
 
   if (!containerEl) {
-    document.title = `${t('components.liveNews.manage') ?? 'Channel management'} - World Monitor`;
+    document.title = `${t('components.liveNews.manage') ?? 'Channel management'} - SENTINEL`;
   }
 
   let channels = loadChannelsFromStorage();

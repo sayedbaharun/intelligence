@@ -261,7 +261,20 @@ export class EventHandlerManager implements AppModule {
     this.boundStorageHandler = (e: StorageEvent) => {
       if (e.key === STORAGE_KEYS.panels && e.newValue) {
         try {
-          this.ctx.panelSettings = JSON.parse(e.newValue) as Record<string, PanelConfig>;
+          const incoming = JSON.parse(e.newValue) as Record<string, PanelConfig>;
+          // Merge with current/default keys so stale settings payloads cannot
+          // hide newly introduced panels across tabs/windows.
+          const merged: Record<string, PanelConfig> = {};
+          for (const [key, cfg] of Object.entries(DEFAULT_PANELS)) {
+            merged[key] = { ...cfg };
+          }
+          for (const [key, cfg] of Object.entries(this.ctx.panelSettings || {})) {
+            if (cfg) merged[key] = { ...cfg };
+          }
+          for (const [key, cfg] of Object.entries(incoming || {})) {
+            if (cfg) merged[key] = { ...cfg };
+          }
+          this.ctx.panelSettings = merged;
           this.applyPanelSettings();
           this.ctx.unifiedSettings?.refreshPanelToggles();
         } catch (_) { }

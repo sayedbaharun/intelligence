@@ -44,6 +44,13 @@ import { EventHandlerManager } from '@/app/event-handlers';
 import { resolveUserRegion, resolvePreciseUserCoordinates, type PreciseCoordinates } from '@/utils/user-location';
 
 const CYBER_LAYER_ENABLED = import.meta.env.VITE_ENABLE_CYBER_LAYER === 'true';
+const PERSONAL_PANEL_MIGRATION_KEY = 'worldmonitor-personal-panels-v1';
+const PERSONAL_PANELS = [
+  'business-radar',
+  'precious-metals-command',
+  'dubai-real-estate-radar',
+  'ai-industry-tracker',
+] as const;
 
 export type { CountryBriefSignals } from '@/app/app-context';
 
@@ -112,6 +119,27 @@ export class App {
           panelSettings[key] = { ...config };
         }
       }
+
+      // One-time migration: ensure personal command-center panels are visible.
+      // Existing users may carry stale panel settings from older releases.
+      if (!localStorage.getItem(PERSONAL_PANEL_MIGRATION_KEY)) {
+        let touched = false;
+        for (const key of PERSONAL_PANELS) {
+          if (!(key in panelSettings) && DEFAULT_PANELS[key]) {
+            panelSettings[key] = { ...DEFAULT_PANELS[key] };
+            touched = true;
+          }
+          if (panelSettings[key] && panelSettings[key].enabled !== true) {
+            panelSettings[key].enabled = true;
+            touched = true;
+          }
+        }
+        if (touched) {
+          saveToStorage(STORAGE_KEYS.panels, panelSettings);
+        }
+        localStorage.setItem(PERSONAL_PANEL_MIGRATION_KEY, 'done');
+      }
+
       console.log('[App] Loaded panel settings from storage:', Object.entries(panelSettings).filter(([_, v]) => !v.enabled).map(([k]) => k));
 
       // One-time migration: reorder panels for existing users (v1.9 panel layout)
