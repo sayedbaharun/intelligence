@@ -372,9 +372,11 @@ export class GlobeMap {
   private async initGlobe(): Promise<void> {
     if (this.destroyed) return;
 
+    const initialScale = getGlobeRenderScale();
+    const initialPixelRatio = resolveGlobePixelRatio(initialScale);
     const config: ConfigOptions = {
       animateIn: false,
-      rendererConfig: { logarithmicDepthBuffer: true, antialias: true },
+      rendererConfig: { logarithmicDepthBuffer: true, antialias: initialPixelRatio > 1 },
     };
 
     const globe = new Globe(this.container, config) as GlobeInstance;
@@ -384,20 +386,20 @@ export class GlobeMap {
       return;
     }
 
-    const applyRenderQuality = (scale?: GlobeRenderScale) => {
+    const applyRenderQuality = (scale?: GlobeRenderScale, width?: number, height?: number) => {
       try {
         const pr = resolveGlobePixelRatio(scale ?? getGlobeRenderScale());
         const renderer = globe.renderer();
         renderer.setPixelRatio(pr);
-        const w = this.container.clientWidth || window.innerWidth;
-        const h = this.container.clientHeight || window.innerHeight;
+        const w = (width ?? this.container.clientWidth) || window.innerWidth;
+        const h = (height ?? this.container.clientHeight) || window.innerHeight;
         renderer.setSize(w, h, false);
       } catch {
         // best-effort
       }
     };
 
-    applyRenderQuality();
+    applyRenderQuality(initialScale);
     this.unsubscribeGlobeQuality?.();
     this.unsubscribeGlobeQuality = subscribeGlobeRenderScaleChange((scale) => applyRenderQuality(scale));
 
@@ -441,10 +443,7 @@ export class GlobeMap {
       const w = this.container.clientWidth;
       const h = this.container.clientHeight;
       if (w > 0 && h > 0) this.globe.width(w).height(h);
-      try {
-        const r = this.globe.renderer();
-        r.setSize(w, h, false);
-      } catch { /* ignore */ }
+      applyRenderQuality(undefined, w, h);
     });
     this.resizeObserver.observe(this.container);
 

@@ -1,22 +1,18 @@
-/**
- * Globe render quality settings.
- *
- * The 3D globe (globe.gl/three.js) can look soft on large/high-DPI displays
- * if the renderer pixel ratio is too low. This setting allows users to
- * explicitly pick a render scale.
- */
-
 export type GlobeRenderScale = 'auto' | '1' | '1.5' | '2' | '3';
 
 const STORAGE_KEY = 'wm-globe-render-scale';
 const EVENT_NAME = 'wm-globe-render-scale-changed';
 
-export const GLOBE_RENDER_SCALE_OPTIONS: { value: GlobeRenderScale; label: string }[] = [
-  { value: 'auto', label: 'Auto (device)' },
-  { value: '1', label: 'Eco (1x)' },
-  { value: '1.5', label: 'Sharp (1.5x)' },
-  { value: '2', label: '4K (2x)' },
-  { value: '3', label: 'Insane (3x)' },
+export const GLOBE_RENDER_SCALE_OPTIONS: {
+  value: GlobeRenderScale;
+  labelKey: string;
+  fallbackLabel: string;
+}[] = [
+  { value: 'auto', labelKey: 'components.insights.globeRenderScaleOptions.auto', fallbackLabel: 'Auto (device)' },
+  { value: '1', labelKey: 'components.insights.globeRenderScaleOptions.1', fallbackLabel: 'Eco (1x)' },
+  { value: '1.5', labelKey: 'components.insights.globeRenderScaleOptions.1_5', fallbackLabel: 'Sharp (1.5x)' },
+  { value: '2', labelKey: 'components.insights.globeRenderScaleOptions.2', fallbackLabel: '4K (2x)' },
+  { value: '3', labelKey: 'components.insights.globeRenderScaleOptions.3', fallbackLabel: 'Insane (3x)' },
 ];
 
 export function getGlobeRenderScale(): GlobeRenderScale {

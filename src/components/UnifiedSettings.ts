@@ -175,7 +175,7 @@ export class UnifiedSettings {
       }
 
       // Language select
-      if (target.closest('.unified-settings-lang-select')) {
+      if (target.id === 'us-language') {
         trackLanguageChange(target.value);
         void changeLanguage(target.value);
         return;
@@ -339,16 +339,22 @@ export class UnifiedSettings {
 
     // Globe render quality (pixel ratio)
     const globeScale = getGlobeRenderScale();
+    const globeRenderLabelKey = 'components.insights.globeRenderQualityLabel';
+    const globeRenderDescKey = 'components.insights.globeRenderQualityDesc';
+    const globeRenderLabel = t(globeRenderLabelKey);
+    const globeRenderDesc = t(globeRenderDescKey);
     html += `<div class="ai-flow-toggle-row">
       <div class="ai-flow-toggle-label-wrap">
-        <div class="ai-flow-toggle-label">Globe render quality</div>
-        <div class="ai-flow-toggle-desc">Controls the globe canvas resolution. Higher values look sharper on 4K displays but can melt GPUs.</div>
+        <div class="ai-flow-toggle-label">${globeRenderLabel === globeRenderLabelKey ? 'Globe render quality' : globeRenderLabel}</div>
+        <div class="ai-flow-toggle-desc">${globeRenderDesc === globeRenderDescKey ? 'Controls the globe canvas resolution. Higher values look sharper on 4K displays but can melt GPUs.' : globeRenderDesc}</div>
       </div>
     </div>`;
-    html += `<select class="unified-settings-lang-select" id="us-globe-render-scale">`;
+    html += `<select class="unified-settings-select" id="us-globe-render-scale">`;
     for (const opt of GLOBE_RENDER_SCALE_OPTIONS) {
       const selected = opt.value === globeScale ? ' selected' : '';
-      html += `<option value="${opt.value}"${selected}>${opt.label}</option>`;
+      const translatedLabel = t(opt.labelKey);
+      const label = translatedLabel === opt.labelKey ? opt.fallbackLabel : translatedLabel;
+      html += `<option value="${opt.value}"${selected}>${label}</option>`;
     }
     html += `</select>`;
 
@@ -389,7 +395,7 @@ export class UnifiedSettings {
         <div class="ai-flow-toggle-desc">${t('components.insights.streamQualityDesc')}</div>
       </div>
     </div>`;
-    html += `<select class="unified-settings-lang-select" id="us-stream-quality">`;
+    html += `<select class="unified-settings-select" id="us-stream-quality">`;
     for (const opt of STREAM_QUALITY_OPTIONS) {
       const selected = opt.value === currentQuality ? ' selected' : '';
       html += `<option value="${opt.value}"${selected}>${opt.label}</option>`;
@@ -398,7 +404,7 @@ export class UnifiedSettings {
 
     // Language section
     html += `<div class="ai-flow-section-label">${t('header.languageLabel')}</div>`;
-    html += `<select class="unified-settings-lang-select">`;
+    html += `<select class="unified-settings-lang-select" id="us-language">`;
     for (const lang of LANGUAGES) {
       const selected = lang.code === currentLang ? ' selected' : '';
       html += `<option value="${lang.code}"${selected}>${lang.flag} ${lang.label}</option>`;
