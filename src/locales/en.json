@@ -215,6 +215,7 @@
     "thinktanks": "Think Tanks",
     "polymarket": "Predictions",
     "commodities": "Commodities",
+    "preciousMetalsCommand": "Precious Metals Command",
     "economic": "Economic Indicators",
     "tradePolicy": "Trade Policy",
     "supplyChain": "Supply Chain",
@@ -2333,4 +2334,3 @@
     "all": "All"
   }
 }
-

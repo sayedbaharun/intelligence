@@ -20,6 +20,7 @@ import type { ServiceStatusPanel } from '@/components/ServiceStatusPanel';
 import type { StablecoinPanel } from '@/components/StablecoinPanel';
 import type { ETFFlowsPanel } from '@/components/ETFFlowsPanel';
 import type { MacroSignalsPanel } from '@/components/MacroSignalsPanel';
+import type { PreciousMetalsCommandPanel } from '@/components/PreciousMetalsCommandPanel';
 import type { StrategicPosturePanel } from '@/components/StrategicPosturePanel';
 import type { StrategicRiskPanel } from '@/components/StrategicRiskPanel';
 import { isDesktopRuntime } from '@/services/runtime';
@@ -604,6 +605,12 @@ export class App {
       () => (this.state.panels['macro-signals'] as MacroSignalsPanel).fetchData(),
       3 * 60_000,
       () => !!this.state.panels['macro-signals']
+    );
+    this.refreshScheduler.scheduleRefresh(
+      'precious-metals-command',
+      () => (this.state.panels['precious-metals-command'] as PreciousMetalsCommandPanel).fetchData(),
+      5 * 60_000,
+      () => !!this.state.panels['precious-metals-command']
     );
     this.refreshScheduler.scheduleRefresh(
       'strategic-posture',

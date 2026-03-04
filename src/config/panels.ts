@@ -30,6 +30,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   thinktanks: { name: 'Think Tanks', enabled: true, priority: 1 },
   polymarket: { name: 'Predictions', enabled: true, priority: 1 },
   commodities: { name: 'Commodities', enabled: true, priority: 1 },
+  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
   markets: { name: 'Markets', enabled: true, priority: 1 },
   economic: { name: 'Economic Indicators', enabled: true, priority: 1 },
   'trade-policy': { name: 'Trade Policy', enabled: true, priority: 1 },
@@ -184,6 +185,7 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   regulation: { name: 'AI Regulation Dashboard', enabled: true, priority: 1 },
   layoffs: { name: 'Layoffs Tracker', enabled: true, priority: 1 },
   markets: { name: 'Tech Stocks', enabled: true, priority: 2 },
+  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 2 },
   finance: { name: 'Financial News', enabled: true, priority: 2 },
   crypto: { name: 'Crypto', enabled: true, priority: 2 },
   hardware: { name: 'Semiconductors & Hardware', enabled: true, priority: 2 },
@@ -325,6 +327,7 @@ const FINANCE_PANELS: Record<string, PanelConfig> = {
   forex: { name: 'Forex & Currencies', enabled: true, priority: 1 },
   bonds: { name: 'Fixed Income', enabled: true, priority: 1 },
   commodities: { name: 'Commodities & Futures', enabled: true, priority: 1 },
+  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
   'commodities-news': { name: 'Commodities News', enabled: true, priority: 2 },
   crypto: { name: 'Crypto & Digital Assets', enabled: true, priority: 1 },
   'crypto-news': { name: 'Crypto News', enabled: true, priority: 2 },
@@ -628,7 +631,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   },
   marketsFinance: {
     labelKey: 'header.panelCatMarketsFinance',
-    panelKeys: ['commodities', 'markets', 'economic', 'trade-policy', 'supply-chain', 'finance', 'polymarket', 'macro-signals', 'gulf-economies', 'etf-flows', 'stablecoins', 'crypto', 'heatmap'],
+    panelKeys: ['commodities', 'precious-metals-command', 'markets', 'economic', 'trade-policy', 'supply-chain', 'finance', 'polymarket', 'macro-signals', 'gulf-economies', 'etf-flows', 'stablecoins', 'crypto', 'heatmap'],
     variants: ['full'],
   },
   topical: {
@@ -660,7 +663,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   },
   techMarkets: {
     labelKey: 'header.panelCatMarkets',
-    panelKeys: ['markets', 'finance', 'crypto', 'economic', 'polymarket', 'macro-signals', 'etf-flows', 'stablecoins', 'layoffs', 'monitors', 'world-clock'],
+    panelKeys: ['markets', 'precious-metals-command', 'finance', 'crypto', 'economic', 'polymarket', 'macro-signals', 'etf-flows', 'stablecoins', 'layoffs', 'monitors', 'world-clock'],
     variants: ['tech'],
   },
 
@@ -677,7 +680,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   },
   finCommodities: {
     labelKey: 'header.panelCatCommodities',
-    panelKeys: ['commodities', 'commodities-news'],
+    panelKeys: ['commodities', 'precious-metals-command', 'commodities-news'],
     variants: ['finance'],
   },
   cryptoDigital: {

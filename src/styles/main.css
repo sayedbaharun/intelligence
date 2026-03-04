@@ -5429,6 +5429,159 @@ body.playback-mode .status-dot {
   opacity: 0.8;
 }
 
+/* Precious Metals Command */
+.pmc-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pmc-metals {
+  display: grid;
+  gap: 6px;
+}
+
+.pmc-metal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--surface, #111) 90%, var(--text) 10%);
+}
+
+.pmc-metal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pmc-metal-symbol {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pmc-metal-name {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.pmc-metal-data {
+  text-align: right;
+}
+
+.pmc-metal-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pmc-metal-change {
+  font-size: 11px;
+}
+
+.pmc-metal-change.up {
+  color: var(--green);
+}
+
+.pmc-metal-change.down {
+  color: var(--red);
+}
+
+.pmc-ratio-card {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+  background: color-mix(in srgb, var(--surface, #111) 88%, var(--text) 12%);
+}
+
+.pmc-ratio-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.pmc-ratio-value {
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+  margin: 4px 0;
+}
+
+.pmc-ratio-note {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.pmc-ratio-green .pmc-ratio-value,
+.pmc-ratio-green .pmc-ratio-note {
+  color: var(--green);
+}
+
+.pmc-ratio-yellow .pmc-ratio-value,
+.pmc-ratio-yellow .pmc-ratio-note {
+  color: var(--yellow);
+}
+
+.pmc-ratio-red .pmc-ratio-value,
+.pmc-ratio-red .pmc-ratio-note {
+  color: var(--red);
+}
+
+.pmc-news-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pmc-news-heading {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-dim);
+}
+
+.pmc-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pmc-news-item {
+  display: block;
+  text-decoration: none;
+  border-left: 2px solid var(--border);
+  padding-left: 6px;
+}
+
+.pmc-news-item:hover .pmc-news-title {
+  color: var(--accent);
+}
+
+.pmc-news-title {
+  display: block;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.pmc-news-meta {
+  display: block;
+  margin-top: 1px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.pmc-news-empty {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
 /* Predictions */
 .prediction-item {
   padding: 10px 0;

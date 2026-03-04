@@ -31,6 +31,7 @@ import {
   ClimateAnomalyPanel,
   PopulationExposurePanel,
   InvestmentsPanel,
+  PreciousMetalsCommandPanel,
   TradePolicyPanel,
   SupplyChainPanel,
   SecurityAdvisoriesPanel,
@@ -477,6 +478,9 @@ export class PanelLayoutManager implements AppModule {
 
     const commoditiesPanel = new CommoditiesPanel();
     this.ctx.panels['commodities'] = commoditiesPanel;
+
+    const preciousMetalsPanel = new PreciousMetalsCommandPanel();
+    this.ctx.panels['precious-metals-command'] = preciousMetalsPanel;
 
     const predictionPanel = new PredictionPanel();
     this.ctx.panels['polymarket'] = predictionPanel;
