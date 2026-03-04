@@ -39,6 +39,7 @@ export * from './ClimateAnomalyPanel';
 export * from './PopulationExposurePanel';
 export * from './InvestmentsPanel';
 export * from './PreciousMetalsCommandPanel';
+export * from './DubaiRealEstateRadarPanel';
 export * from './UnifiedSettings';
 export * from './TradePolicyPanel';
 export * from './SupplyChainPanel';

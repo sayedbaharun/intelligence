@@ -5582,6 +5582,65 @@ body.playback-mode .status-dot {
   color: var(--text-dim);
 }
 
+/* Dubai Real Estate Radar */
+.drr-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drr-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drr-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 3px;
+}
+
+.drr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drr-item {
+  display: block;
+  text-decoration: none;
+  border-left: 2px solid var(--border);
+  padding-left: 6px;
+}
+
+.drr-item:hover .drr-item-title {
+  color: var(--accent);
+}
+
+.drr-item-title {
+  display: block;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.drr-item-meta {
+  display: block;
+  margin-top: 1px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.drr-empty {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
 /* Predictions */
 .prediction-item {
   padding: 10px 0;

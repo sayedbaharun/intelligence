@@ -21,6 +21,7 @@ import type { StablecoinPanel } from '@/components/StablecoinPanel';
 import type { ETFFlowsPanel } from '@/components/ETFFlowsPanel';
 import type { MacroSignalsPanel } from '@/components/MacroSignalsPanel';
 import type { PreciousMetalsCommandPanel } from '@/components/PreciousMetalsCommandPanel';
+import type { DubaiRealEstateRadarPanel } from '@/components/DubaiRealEstateRadarPanel';
 import type { StrategicPosturePanel } from '@/components/StrategicPosturePanel';
 import type { StrategicRiskPanel } from '@/components/StrategicRiskPanel';
 import { isDesktopRuntime } from '@/services/runtime';
@@ -611,6 +612,12 @@ export class App {
       () => (this.state.panels['precious-metals-command'] as PreciousMetalsCommandPanel).fetchData(),
       5 * 60_000,
       () => !!this.state.panels['precious-metals-command']
+    );
+    this.refreshScheduler.scheduleRefresh(
+      'dubai-real-estate-radar',
+      () => (this.state.panels['dubai-real-estate-radar'] as DubaiRealEstateRadarPanel).fetchData(),
+      10 * 60_000,
+      () => !!this.state.panels['dubai-real-estate-radar']
     );
     this.refreshScheduler.scheduleRefresh(
       'strategic-posture',

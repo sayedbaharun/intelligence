@@ -32,6 +32,7 @@ import {
   PopulationExposurePanel,
   InvestmentsPanel,
   PreciousMetalsCommandPanel,
+  DubaiRealEstateRadarPanel,
   TradePolicyPanel,
   SupplyChainPanel,
   SecurityAdvisoriesPanel,
@@ -481,6 +482,9 @@ export class PanelLayoutManager implements AppModule {
 
     const preciousMetalsPanel = new PreciousMetalsCommandPanel();
     this.ctx.panels['precious-metals-command'] = preciousMetalsPanel;
+
+    const dubaiRealEstateRadarPanel = new DubaiRealEstateRadarPanel();
+    this.ctx.panels['dubai-real-estate-radar'] = dubaiRealEstateRadarPanel;
 
     const predictionPanel = new PredictionPanel();
     this.ctx.panels['polymarket'] = predictionPanel;
