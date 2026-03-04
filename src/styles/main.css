@@ -5641,6 +5641,65 @@ body.playback-mode .status-dot {
   color: var(--text-dim);
 }
 
+/* AI Industry Tracker */
+.ait-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ait-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ait-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 3px;
+}
+
+.ait-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ait-item {
+  display: block;
+  text-decoration: none;
+  border-left: 2px solid var(--border);
+  padding-left: 6px;
+}
+
+.ait-item:hover .ait-item-title {
+  color: var(--accent);
+}
+
+.ait-item-title {
+  display: block;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.ait-item-meta {
+  display: block;
+  margin-top: 1px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.ait-empty {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
 /* Predictions */
 .prediction-item {
   padding: 10px 0;

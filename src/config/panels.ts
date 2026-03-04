@@ -32,6 +32,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
   commodities: { name: 'Commodities', enabled: true, priority: 1 },
   'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
   'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 1 },
+  'ai-industry-tracker': { name: 'AI Industry Tracker', enabled: true, priority: 2 },
   markets: { name: 'Markets', enabled: true, priority: 1 },
   economic: { name: 'Economic Indicators', enabled: true, priority: 1 },
   'trade-policy': { name: 'Trade Policy', enabled: true, priority: 1 },
@@ -188,6 +189,7 @@ const TECH_PANELS: Record<string, PanelConfig> = {
   markets: { name: 'Tech Stocks', enabled: true, priority: 2 },
   'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 2 },
   'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 2 },
+  'ai-industry-tracker': { name: 'AI Industry Tracker', enabled: true, priority: 1 },
   finance: { name: 'Financial News', enabled: true, priority: 2 },
   crypto: { name: 'Crypto', enabled: true, priority: 2 },
   hardware: { name: 'Semiconductors & Hardware', enabled: true, priority: 2 },
@@ -331,6 +333,7 @@ const FINANCE_PANELS: Record<string, PanelConfig> = {
   commodities: { name: 'Commodities & Futures', enabled: true, priority: 1 },
   'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
   'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 1 },
+  'ai-industry-tracker': { name: 'AI Industry Tracker', enabled: true, priority: 2 },
   'commodities-news': { name: 'Commodities News', enabled: true, priority: 2 },
   crypto: { name: 'Crypto & Digital Assets', enabled: true, priority: 1 },
   'crypto-news': { name: 'Crypto News', enabled: true, priority: 2 },
@@ -639,7 +642,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   },
   topical: {
     labelKey: 'header.panelCatTopical',
-    panelKeys: ['energy', 'gov', 'thinktanks', 'tech', 'ai', 'layoffs'],
+    panelKeys: ['energy', 'gov', 'thinktanks', 'tech', 'ai', 'ai-industry-tracker', 'layoffs'],
     variants: ['full'],
   },
   dataTracking: {
@@ -651,7 +654,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   // Tech variant
   techAi: {
     labelKey: 'header.panelCatTechAi',
-    panelKeys: ['ai', 'tech', 'hardware', 'cloud', 'dev', 'github', 'producthunt', 'events', 'service-status', 'tech-readiness'],
+    panelKeys: ['ai', 'ai-industry-tracker', 'tech', 'hardware', 'cloud', 'dev', 'github', 'producthunt', 'events', 'service-status', 'tech-readiness'],
     variants: ['tech'],
   },
   startupsVc: {
@@ -673,7 +676,7 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
   // Finance variant
   finMarkets: {
     labelKey: 'header.panelCatMarkets',
-    panelKeys: ['markets', 'markets-news', 'heatmap', 'macro-signals', 'analysis', 'polymarket'],
+    panelKeys: ['markets', 'markets-news', 'ai-industry-tracker', 'heatmap', 'macro-signals', 'analysis', 'polymarket'],
     variants: ['finance'],
   },
   fixedIncomeFx: {
