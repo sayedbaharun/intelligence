@@ -92,12 +92,14 @@ export class PreciousMetalsCommandPanel extends Panel {
     const bySymbol = new Map(quotes.map((quote) => [quote.symbol, quote]));
     const silver = bySymbol.get('SI=F');
     const gold = bySymbol.get('GC=F');
-    if ((silver?.price ?? null) === null || (gold?.price ?? null) === null) {
+    const silverPrice = silver?.price;
+    const goldPrice = gold?.price;
+    if (!silver || !gold || silverPrice == null || goldPrice == null) {
       this.showError(t('common.failedCommodities'));
       return;
     }
 
-    const ratio = gold.price / silver.price;
+    const ratio = goldPrice / silverPrice;
     const ratioSignal = this.getRatioSignal(ratio);
     const ratioNote = ratioSignal === 'green'
       ? 'Silver is cheap relative to gold (bullish)'
