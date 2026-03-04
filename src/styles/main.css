@@ -5700,6 +5700,146 @@ body.playback-mode .status-dot {
   color: var(--text-dim);
 }
 
+/* Business Radar */
+.br-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.br-status {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 7px 8px;
+  font-size: 10px;
+  letter-spacing: 0.2px;
+}
+
+.br-status-clear {
+  color: color-mix(in srgb, var(--green) 88%, white 12%);
+  background: color-mix(in srgb, var(--surface, #111) 90%, var(--green) 10%);
+}
+
+.br-status-alert {
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface, #111) 94%, var(--text) 6%);
+}
+
+.br-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.br-alert {
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  border-radius: 4px;
+  padding: 8px;
+  background: color-mix(in srgb, var(--surface, #111) 92%, var(--text) 8%);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.br-tone-critical {
+  border-left-color: color-mix(in srgb, var(--red) 80%, white 20%);
+}
+
+.br-tone-market {
+  border-left-color: color-mix(in srgb, var(--yellow) 80%, #ff8c00 20%);
+}
+
+.br-tone-opportunity {
+  border-left-color: color-mix(in srgb, var(--semantic-info) 80%, #8ec5ff 20%);
+}
+
+.br-tone-regulatory {
+  border-left-color: color-mix(in srgb, var(--green) 80%, white 20%);
+}
+
+.br-alert-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.br-icon {
+  font-size: 14px;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.br-title-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.br-title {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.br-time {
+  margin-top: 1px;
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.br-context {
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.br-section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-dim);
+}
+
+.br-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.br-line {
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.br-evidence {
+  display: block;
+  margin-top: 2px;
+  border-top: 1px dashed var(--border);
+  padding-top: 4px;
+  text-decoration: none;
+}
+
+.br-evidence-link:hover .br-evidence-title {
+  color: var(--accent);
+}
+
+.br-evidence-meta {
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.br-evidence-title {
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.br-empty {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
 /* Predictions */
 .prediction-item {
   padding: 10px 0;

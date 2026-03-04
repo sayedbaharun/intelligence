@@ -22,6 +22,7 @@ type RatioSignal = 'green' | 'yellow' | 'red';
 
 export class PreciousMetalsCommandPanel extends Panel {
   private loading = true;
+  private latestRatio: number | null = null;
 
   constructor() {
     super({ id: 'precious-metals-command', title: t('panels.preciousMetalsCommand') });
@@ -63,6 +64,7 @@ export class PreciousMetalsCommandPanel extends Panel {
     this.loading = false;
 
     if (!haveBothMetals) {
+      this.latestRatio = null;
       this.showError(sawRateLimit ? t('common.rateLimitedMarket') : t('common.failedCommodities'));
       return;
     }
@@ -95,11 +97,13 @@ export class PreciousMetalsCommandPanel extends Panel {
     const silverPrice = silver?.price;
     const goldPrice = gold?.price;
     if (!silver || !gold || silverPrice == null || goldPrice == null) {
+      this.latestRatio = null;
       this.showError(t('common.failedCommodities'));
       return;
     }
 
     const ratio = goldPrice / silverPrice;
+    this.latestRatio = ratio;
     const ratioSignal = this.getRatioSignal(ratio);
     const ratioNote = ratioSignal === 'green'
       ? 'Silver is cheap relative to gold (bullish)'
@@ -164,5 +168,9 @@ export class PreciousMetalsCommandPanel extends Panel {
     `;
 
     this.setContent(html);
+  }
+
+  public getLatestRatio(): number | null {
+    return this.latestRatio;
   }
 }

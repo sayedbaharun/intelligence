@@ -73,6 +73,7 @@ function dedupeItems(items: NewsItem[]): NewsItem[] {
 
 export class AIIndustryTrackerPanel extends Panel {
   private loading = true;
+  private latestItems: NewsItem[] = [];
 
   constructor() {
     super({ id: 'ai-industry-tracker', title: t('panels.aiIndustryTracker') });
@@ -116,6 +117,7 @@ export class AIIndustryTrackerPanel extends Panel {
     }
 
     this.loading = false;
+    this.latestItems = merged;
     this.renderPanel(merged);
   }
 
@@ -171,5 +173,9 @@ export class AIIndustryTrackerPanel extends Panel {
     `;
 
     this.setContent(html);
+  }
+
+  public getLatestHeadlines(): NewsItem[] {
+    return [...this.latestItems];
   }
 }

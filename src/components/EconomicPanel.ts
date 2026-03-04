@@ -57,6 +57,14 @@ export class EconomicPanel extends Panel {
     }
   }
 
+  public getOilData(): OilAnalytics | null {
+    return this.oilData;
+  }
+
+  public getFredData(): FredSeries[] {
+    return [...this.fredData];
+  }
+
   private render(): void {
     const hasOil = this.oilData && (this.oilData.wtiPrice || this.oilData.brentPrice);
     const hasSpending = this.spendingData && this.spendingData.awards.length > 0;

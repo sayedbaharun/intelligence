@@ -41,6 +41,7 @@ export * from './InvestmentsPanel';
 export * from './PreciousMetalsCommandPanel';
 export * from './DubaiRealEstateRadarPanel';
 export * from './AIIndustryTrackerPanel';
+export * from './BusinessRadarPanel';
 export * from './UnifiedSettings';
 export * from './TradePolicyPanel';
 export * from './SupplyChainPanel';

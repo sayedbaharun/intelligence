@@ -23,6 +23,7 @@ import type { MacroSignalsPanel } from '@/components/MacroSignalsPanel';
 import type { PreciousMetalsCommandPanel } from '@/components/PreciousMetalsCommandPanel';
 import type { DubaiRealEstateRadarPanel } from '@/components/DubaiRealEstateRadarPanel';
 import type { AIIndustryTrackerPanel } from '@/components/AIIndustryTrackerPanel';
+import type { BusinessRadarPanel } from '@/components/BusinessRadarPanel';
 import type { StrategicPosturePanel } from '@/components/StrategicPosturePanel';
 import type { StrategicRiskPanel } from '@/components/StrategicRiskPanel';
 import { isDesktopRuntime } from '@/services/runtime';
@@ -468,6 +469,7 @@ export class App {
     this.dataLoader.syncDataFreshnessWithLayers();
     await preloadCountryGeometry();
     await this.dataLoader.loadAllData();
+    await (this.state.panels['business-radar'] as BusinessRadarPanel | undefined)?.fetchData();
 
     startLearning();
 
@@ -625,6 +627,12 @@ export class App {
       () => (this.state.panels['ai-industry-tracker'] as AIIndustryTrackerPanel).fetchData(),
       10 * 60_000,
       () => !!this.state.panels['ai-industry-tracker']
+    );
+    this.refreshScheduler.scheduleRefresh(
+      'business-radar',
+      () => (this.state.panels['business-radar'] as BusinessRadarPanel).fetchData(),
+      2 * 60_000,
+      () => !!this.state.panels['business-radar']
     );
     this.refreshScheduler.scheduleRefresh(
       'strategic-posture',

@@ -34,6 +34,7 @@ import {
   PreciousMetalsCommandPanel,
   DubaiRealEstateRadarPanel,
   AIIndustryTrackerPanel,
+  BusinessRadarPanel,
   TradePolicyPanel,
   SupplyChainPanel,
   SecurityAdvisoriesPanel,
@@ -489,6 +490,23 @@ export class PanelLayoutManager implements AppModule {
 
     const aiIndustryTrackerPanel = new AIIndustryTrackerPanel();
     this.ctx.panels['ai-industry-tracker'] = aiIndustryTrackerPanel;
+
+    const businessRadarPanel = new BusinessRadarPanel({
+      getAllNews: () => this.ctx.allNews,
+      getPreciousMetalsRatio: () =>
+        (this.ctx.panels['precious-metals-command'] as PreciousMetalsCommandPanel | undefined)?.getLatestRatio() ?? null,
+      getAiIndustryHeadlines: () =>
+        (this.ctx.panels['ai-industry-tracker'] as AIIndustryTrackerPanel | undefined)?.getLatestHeadlines() ?? [],
+      getDubaiRegulatoryHeadlines: () =>
+        (this.ctx.panels['dubai-real-estate-radar'] as DubaiRealEstateRadarPanel | undefined)?.getRegulatoryAlerts() ?? [],
+      getOilData: () =>
+        (this.ctx.panels['economic'] as EconomicPanel | undefined)?.getOilData() ?? null,
+      getFredData: () =>
+        (this.ctx.panels['economic'] as EconomicPanel | undefined)?.getFredData() ?? [],
+      getCryptoData: () =>
+        (this.ctx.panels['crypto'] as CryptoPanel | undefined)?.getLatestData() ?? [],
+    });
+    this.ctx.panels['business-radar'] = businessRadarPanel;
 
     const predictionPanel = new PredictionPanel();
     this.ctx.panels['polymarket'] = predictionPanel;

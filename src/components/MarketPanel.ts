@@ -198,11 +198,14 @@ export class CommoditiesPanel extends Panel {
 }
 
 export class CryptoPanel extends Panel {
+  private latestData: CryptoData[] = [];
+
   constructor() {
     super({ id: 'crypto', title: t('panels.crypto') });
   }
 
   public renderCrypto(data: CryptoData[]): void {
+    this.latestData = data;
     if (data.length === 0) {
       this.showError(t('common.failedCryptoData'));
       return;
@@ -227,5 +230,9 @@ export class CryptoPanel extends Panel {
       .join('');
 
     this.setContent(html);
+  }
+
+  public getLatestData(): CryptoData[] {
+    return [...this.latestData];
   }
 }

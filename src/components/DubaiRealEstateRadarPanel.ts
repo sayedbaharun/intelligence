@@ -70,6 +70,7 @@ function matchesKeywords(title: string, keywords: string[]): boolean {
 
 export class DubaiRealEstateRadarPanel extends Panel {
   private loading = true;
+  private latestRegulatoryAlerts: NewsItem[] = [];
 
   constructor() {
     super({ id: 'dubai-real-estate-radar', title: t('panels.dubaiRealEstateRadar') });
@@ -140,12 +141,14 @@ export class DubaiRealEstateRadarPanel extends Panel {
 
     const deduped = dedupeItems(headlines);
     if (deduped.length === 0) {
+      this.latestRegulatoryAlerts = [];
       this.showError(t('common.noNewsAvailable'));
       return;
     }
 
     const regulatoryAlerts = deduped.filter((item) => matchesKeywords(item.title, REGULATORY_KEYWORDS));
     const distressedSignals = deduped.filter((item) => matchesKeywords(item.title, DISTRESSED_KEYWORDS));
+    this.latestRegulatoryAlerts = regulatoryAlerts;
 
     const html = `
       <div class="drr-container">
@@ -156,5 +159,9 @@ export class DubaiRealEstateRadarPanel extends Panel {
     `;
 
     this.setContent(html);
+  }
+
+  public getRegulatoryAlerts(): NewsItem[] {
+    return [...this.latestRegulatoryAlerts];
   }
 }
