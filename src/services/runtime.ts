@@ -153,7 +153,7 @@ const APP_HOSTS = new Set([
   'api.worldmonitor.app',
   'localhost',
   '127.0.0.1',
-  ...extractHostnames(WS_API_URL, import.meta.env.VITE_WS_RELAY_URL),
+  ...extractHostnames(WS_API_URL, import.meta.env.VITE_AI_STREAM_API),
 ]);
 
 function isAppOriginUrl(urlStr: string): boolean {

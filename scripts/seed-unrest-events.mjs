@@ -90,9 +90,9 @@ function sortBySeverityAndRecency(events) {
 // ---------- ACLED Fetch ----------
 
 async function fetchAcledProtests() {
-  const token = process.env.ACLED_ACCESS_TOKEN;
+  const token = process.env.GDELT_CLOUD_API;
   if (!token) {
-    console.warn('  ACLED_ACCESS_TOKEN not set, skipping ACLED');
+    console.warn('  GDELT_CLOUD_API not set, skipping ACLED');
     return [];
   }
 

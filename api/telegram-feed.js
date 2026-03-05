@@ -24,7 +24,7 @@ export default async function handler(req) {
 
   const relayBaseUrl = getRelayBaseUrl();
   if (!relayBaseUrl) {
-    return new Response(JSON.stringify({ error: 'WS_RELAY_URL is not configured' }), {
+    return new Response(JSON.stringify({ error: 'AI_STREAM_API is not configured' }), {
       status: 503,
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });

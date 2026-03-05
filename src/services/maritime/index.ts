@@ -136,7 +136,7 @@ const MAX_CALLBACK_TRACKED_VESSELS = 20000;
 // ---- Raw Relay URL (for candidate reports path) ----
 
 const SNAPSHOT_PROXY_URL = '/api/ais-snapshot';
-const wsRelayUrl = import.meta.env.VITE_WS_RELAY_URL || '';
+const wsRelayUrl = import.meta.env.VITE_AI_STREAM_API || '';
 const DIRECT_RAILWAY_SNAPSHOT_URL = wsRelayUrl
   ? wsRelayUrl.replace('wss://', 'https://').replace('ws://', 'http://').replace(/\/$/, '') + '/ais/snapshot'
   : '';

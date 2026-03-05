@@ -2066,7 +2066,7 @@ const CII_SEED_TTL = 900; // 15 min
 const CII_STALE_TTL = 3600; // 1 hour
 const CII_REDIS_KEY = 'risk:scores:sebuf:v1';
 const CII_STALE_KEY = 'risk:scores:sebuf:stale:v1';
-const ACLED_ACCESS_TOKEN = process.env.ACLED_ACCESS_TOKEN || '';
+const ACLED_ACCESS_TOKEN = process.env.GDELT_CLOUD_API || '';
 const ACLED_API_URL = 'https://acleddata.com/api/acled/read';
 
 const CII_BASELINE_RISK = {

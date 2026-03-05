@@ -12,7 +12,7 @@ import { VARIANT_FEEDS, INTEL_SOURCES, type ServerFeed } from './_feeds';
 import { classifyByKeyword, type ThreatLevel } from './_classifier';
 
 function getRelayBaseUrl(): string | null {
-  const relayUrl = process.env.WS_RELAY_URL;
+  const relayUrl = process.env.AI_STREAM_API;
   if (!relayUrl) return null;
   return relayUrl
     .replace(/^ws(s?):\/\//, 'http$1://')

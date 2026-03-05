@@ -11,7 +11,7 @@ function restoreEnv() {
   Object.assign(process.env, originalEnv);
 }
 
-process.env.WS_RELAY_URL = 'wss://relay.example.com';
+process.env.AI_STREAM_API = 'wss://relay.example.com';
 process.env.RELAY_SHARED_SECRET = 'test-secret';
 
 const { getRelayBaseUrl, getRelayHeaders, fetchWithTimeout, createRelayHandler } = await import('../api/_relay.js');
@@ -52,27 +52,27 @@ describe('getRelayBaseUrl', () => {
   afterEach(restoreEnv);
 
   it('converts wss:// to https://', () => {
-    process.env.WS_RELAY_URL = 'wss://relay.example.com';
+    process.env.AI_STREAM_API = 'wss://relay.example.com';
     assert.equal(getRelayBaseUrl(), 'https://relay.example.com');
   });
 
   it('converts ws:// to http://', () => {
-    process.env.WS_RELAY_URL = 'ws://relay.example.com';
+    process.env.AI_STREAM_API = 'ws://relay.example.com';
     assert.equal(getRelayBaseUrl(), 'http://relay.example.com');
   });
 
   it('strips trailing slash', () => {
-    process.env.WS_RELAY_URL = 'https://relay.example.com/';
+    process.env.AI_STREAM_API = 'https://relay.example.com/';
     assert.equal(getRelayBaseUrl(), 'https://relay.example.com');
   });
 
   it('returns null when not set', () => {
-    delete process.env.WS_RELAY_URL;
+    delete process.env.AI_STREAM_API;
     assert.equal(getRelayBaseUrl(), null);
   });
 
   it('returns null for empty string', () => {
-    process.env.WS_RELAY_URL = '';
+    process.env.AI_STREAM_API = '';
     assert.equal(getRelayBaseUrl(), null);
   });
 });
@@ -132,7 +132,7 @@ describe('fetchWithTimeout', () => {
 
 describe('createRelayHandler', () => {
   beforeEach(() => {
-    process.env.WS_RELAY_URL = 'wss://relay.example.com';
+    process.env.AI_STREAM_API = 'wss://relay.example.com';
     process.env.RELAY_SHARED_SECRET = 'test-secret';
   });
   afterEach(() => {
@@ -191,13 +191,13 @@ describe('createRelayHandler', () => {
     assert.equal(res.status, 200);
   });
 
-  it('responds 503 when WS_RELAY_URL not set', async () => {
-    delete process.env.WS_RELAY_URL;
+  it('responds 503 when AI_STREAM_API not set', async () => {
+    delete process.env.AI_STREAM_API;
     const handler = createRelayHandler({ relayPath: '/test' });
     const res = await handler(makeRequest('https://worldmonitor.app/api/test'));
     assert.equal(res.status, 503);
     const body = await res.json();
-    assert.equal(body.error, 'WS_RELAY_URL is not configured');
+    assert.equal(body.error, 'AI_STREAM_API is not configured');
   });
 
   it('proxies relay response with correct status and body', async () => {
@@ -314,7 +314,7 @@ describe('createRelayHandler', () => {
   });
 
   it('calls fallback when relay unavailable', async () => {
-    delete process.env.WS_RELAY_URL;
+    delete process.env.AI_STREAM_API;
     const handler = createRelayHandler({
       relayPath: '/test',
       fallback: (_req, cors) => new Response('{"fallback":true}', {

@@ -54,7 +54,7 @@ const GAMMA_API = 'https://gamma-api.polymarket.com';
 
 // Polymarket proxy URL (Vercel server route injects Railway secret server-side)
 const POLYMARKET_PROXY_URL = '/api/polymarket';
-const wsRelayUrl = import.meta.env.VITE_WS_RELAY_URL || '';
+const wsRelayUrl = import.meta.env.VITE_AI_STREAM_API || '';
 const DIRECT_RAILWAY_POLY_URL = wsRelayUrl
   ? wsRelayUrl.replace('wss://', 'https://').replace('ws://', 'http://').replace(/\/$/, '') + '/polymarket'
   : '';

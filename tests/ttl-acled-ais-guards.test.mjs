@@ -66,7 +66,7 @@ describe('ACLED shared cache layer', () => {
 
   it('returns empty array when API token is missing', () => {
     assert.match(src, /if \(!token\) return \[\]/,
-      'Should gracefully degrade when ACLED_ACCESS_TOKEN is not set');
+      'Should gracefully degrade when GDELT_CLOUD_API is not set');
   });
 
   it('caches successful results via cachedFetchJson', () => {

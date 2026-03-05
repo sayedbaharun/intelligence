@@ -369,7 +369,7 @@ export interface NotamClosureResult {
 }
 
 export function getRelayBaseUrl(): string | null {
-  const relayUrl = process.env.WS_RELAY_URL;
+  const relayUrl = process.env.AI_STREAM_API;
   if (!relayUrl) return null;
   return relayUrl
     .replace('wss://', 'https://')

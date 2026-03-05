@@ -3,7 +3,7 @@ import { validateApiKey } from './_api-key.js';
 import { checkRateLimit } from './_rate-limit.js';
 
 export function getRelayBaseUrl() {
-  const relayUrl = process.env.WS_RELAY_URL;
+  const relayUrl = process.env.AI_STREAM_API;
   if (!relayUrl) return null;
   return relayUrl.replace('wss://', 'https://').replace('ws://', 'http://').replace(/\/$/, '');
 }
@@ -68,7 +68,7 @@ export function createRelayHandler(cfg) {
     const relayBaseUrl = getRelayBaseUrl();
     if (!relayBaseUrl) {
       if (cfg.fallback) return cfg.fallback(req, corsHeaders);
-      return new Response(JSON.stringify({ error: 'WS_RELAY_URL is not configured' }), {
+      return new Response(JSON.stringify({ error: 'AI_STREAM_API is not configured' }), {
         status: 503,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });

@@ -100,10 +100,10 @@ globalThis.fetch = async function ipv4Fetch(input, init) {
 
 const ALLOWED_ENV_KEYS = new Set([
   'GROQ_API_KEY', 'OPENROUTER_API_KEY', 'FRED_API_KEY', 'EIA_API_KEY',
-  'CLOUDFLARE_API_TOKEN', 'ACLED_ACCESS_TOKEN', 'URLHAUS_AUTH_KEY',
-  'OTX_API_KEY', 'ABUSEIPDB_API_KEY', 'WINGBITS_API_KEY', 'WS_RELAY_URL',
+  'CLOUDFLARE_API_TOKEN', 'GDELT_CLOUD_API', 'URLHAUS_AUTH_KEY',
+  'OTX_API_KEY', 'ABUSEIPDB_API_KEY', 'WINGBITS_API_KEY', 'AI_STREAM_API',
   'VITE_OPENSKY_RELAY_URL', 'OPENSKY_CLIENT_ID', 'OPENSKY_CLIENT_SECRET',
-  'AISSTREAM_API_KEY', 'VITE_WS_RELAY_URL', 'FINNHUB_API_KEY', 'NASA_FIRMS_API_KEY',
+  'AISSTREAM_API_KEY', 'VITE_AI_STREAM_API', 'FINNHUB_API_KEY', 'NASA_FIRMS_API_KEY',
   'OLLAMA_API_URL', 'OLLAMA_MODEL', 'WORLDMONITOR_API_KEY', 'WTO_API_KEY',
   'AVIATIONSTACK_API', 'ICAO_API_KEY', 'UCDP_ACCESS_TOKEN',
 ]);
@@ -715,7 +715,7 @@ async function validateSecretAgainstProvider(key, rawValue, context = {}) {
       return ok('Cloudflare token verified');
     }
 
-    case 'ACLED_ACCESS_TOKEN': {
+    case 'GDELT_CLOUD_API': {
       const now = new Date();
       const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       const fmt = (d) => d.toISOString().split('T')[0];
@@ -873,8 +873,8 @@ async function validateSecretAgainstProvider(key, rawValue, context = {}) {
     case 'OLLAMA_MODEL':
       return ok('Model name stored');
 
-    case 'WS_RELAY_URL':
-    case 'VITE_WS_RELAY_URL':
+    case 'AI_STREAM_API':
+    case 'VITE_AI_STREAM_API':
     case 'VITE_OPENSKY_RELAY_URL': {
       const probeUrl = relayToHttpUrl(value);
       if (!probeUrl) return fail('Relay URL is invalid');

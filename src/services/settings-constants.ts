@@ -6,7 +6,7 @@ export const SIGNUP_URLS: Partial<Record<RuntimeSecretKey, string>> = {
   FRED_API_KEY: 'https://fred.stlouisfed.org/docs/api/api_key.html',
   EIA_API_KEY: 'https://www.eia.gov/opendata/register.php',
   CLOUDFLARE_API_TOKEN: 'https://dash.cloudflare.com/profile/api-tokens',
-  ACLED_ACCESS_TOKEN: 'https://developer.acleddata.com/',
+  GDELT_CLOUD_API: 'https://developer.acleddata.com/',
   URLHAUS_AUTH_KEY: 'https://auth.abuse.ch/',
   OTX_API_KEY: 'https://otx.alienvault.com/',
   ABUSEIPDB_API_KEY: 'https://www.abuseipdb.com/login',
@@ -27,7 +27,7 @@ export const SIGNUP_URLS: Partial<Record<RuntimeSecretKey, string>> = {
 export const PLAINTEXT_KEYS = new Set<RuntimeSecretKey>([
   'OLLAMA_API_URL',
   'OLLAMA_MODEL',
-  'WS_RELAY_URL',
+  'AI_STREAM_API',
   'VITE_OPENSKY_RELAY_URL',
 ]);
 
@@ -39,12 +39,12 @@ export const HUMAN_LABELS: Record<RuntimeSecretKey, string> = {
   FRED_API_KEY: 'FRED API Key',
   EIA_API_KEY: 'EIA API Key',
   CLOUDFLARE_API_TOKEN: 'Cloudflare API Token',
-  ACLED_ACCESS_TOKEN: 'ACLED Access Token',
+  GDELT_CLOUD_API: 'ACLED Access Token',
   URLHAUS_AUTH_KEY: 'URLhaus Auth Key',
   OTX_API_KEY: 'AlienVault OTX Key',
   ABUSEIPDB_API_KEY: 'AbuseIPDB API Key',
   WINGBITS_API_KEY: 'Wingbits API Key',
-  WS_RELAY_URL: 'WebSocket Relay URL',
+  AI_STREAM_API: 'WebSocket Relay URL',
   VITE_OPENSKY_RELAY_URL: 'OpenSky Relay URL',
   OPENSKY_CLIENT_ID: 'OpenSky Client ID',
   OPENSKY_CLIENT_SECRET: 'OpenSky Client Secret',

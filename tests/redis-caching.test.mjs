@@ -467,7 +467,7 @@ describe('theater posture caching behavior', { concurrency: 1 }, () => {
     const { module, cleanup } = await importTheaterPosture();
     const restoreEnv = withEnv({
       LOCAL_API_MODE: 'sidecar',
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       WINGBITS_API_KEY: undefined,
       UPSTASH_REDIS_REST_URL: 'https://redis.test',
       UPSTASH_REDIS_REST_TOKEN: 'token',
@@ -515,7 +515,7 @@ describe('theater posture caching behavior', { concurrency: 1 }, () => {
     const { module, cleanup } = await importTheaterPosture();
     const restoreEnv = withEnv({
       LOCAL_API_MODE: 'sidecar',
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       WINGBITS_API_KEY: undefined,
       UPSTASH_REDIS_REST_URL: 'https://redis.test',
       UPSTASH_REDIS_REST_TOKEN: 'token',
@@ -561,7 +561,7 @@ describe('theater posture caching behavior', { concurrency: 1 }, () => {
     const { module, cleanup } = await importTheaterPosture();
     const restoreEnv = withEnv({
       LOCAL_API_MODE: 'sidecar',
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       WINGBITS_API_KEY: undefined,
       UPSTASH_REDIS_REST_URL: 'https://redis.test',
       UPSTASH_REDIS_REST_TOKEN: 'token',
@@ -598,7 +598,7 @@ describe('theater posture caching behavior', { concurrency: 1 }, () => {
     const { module, cleanup } = await importTheaterPosture();
     const restoreEnv = withEnv({
       LOCAL_API_MODE: 'sidecar',
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       WINGBITS_API_KEY: undefined,
       UPSTASH_REDIS_REST_URL: 'https://redis.test',
       UPSTASH_REDIS_REST_TOKEN: 'token',
@@ -797,7 +797,7 @@ describe('military flights bbox behavior', { concurrency: 1 }, () => {
     const { module, cleanup } = await importListMilitaryFlights();
     const restoreEnv = withEnv({
       LOCAL_API_MODE: 'sidecar',
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       UPSTASH_REDIS_REST_URL: undefined,
       UPSTASH_REDIS_REST_TOKEN: undefined,
     });
@@ -846,7 +846,7 @@ describe('military flights bbox behavior', { concurrency: 1 }, () => {
       UPSTASH_REDIS_REST_URL: 'https://redis.test',
       UPSTASH_REDIS_REST_TOKEN: 'token',
       LOCAL_API_MODE: undefined,
-      WS_RELAY_URL: undefined,
+      AI_STREAM_API: undefined,
       VERCEL_ENV: undefined,
       VERCEL_GIT_COMMIT_SHA: undefined,
     });

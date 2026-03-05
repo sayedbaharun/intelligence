@@ -7,12 +7,12 @@ export type RuntimeSecretKey =
   | 'FRED_API_KEY'
   | 'EIA_API_KEY'
   | 'CLOUDFLARE_API_TOKEN'
-  | 'ACLED_ACCESS_TOKEN'
+  | 'GDELT_CLOUD_API'
   | 'URLHAUS_AUTH_KEY'
   | 'OTX_API_KEY'
   | 'ABUSEIPDB_API_KEY'
   | 'WINGBITS_API_KEY'
-  | 'WS_RELAY_URL'
+  | 'AI_STREAM_API'
   | 'VITE_OPENSKY_RELAY_URL'
   | 'OPENSKY_CLIENT_ID'
   | 'OPENSKY_CLIENT_SECRET'
@@ -148,7 +148,7 @@ export const RUNTIME_FEATURES: RuntimeFeatureDefinition[] = [
     id: 'acledConflicts',
     name: 'ACLED conflicts & protests',
     description: 'Conflict and protest event feeds from ACLED.',
-    requiredSecrets: ['ACLED_ACCESS_TOKEN'],
+    requiredSecrets: ['GDELT_CLOUD_API'],
     fallback: 'Conflict/protest overlays are hidden.',
   },
   {
@@ -190,7 +190,7 @@ export const RUNTIME_FEATURES: RuntimeFeatureDefinition[] = [
     id: 'aisRelay',
     name: 'AIS vessel tracking',
     description: 'Live vessel ingestion via AISStream WebSocket.',
-    requiredSecrets: ['WS_RELAY_URL', 'AISSTREAM_API_KEY'],
+    requiredSecrets: ['AI_STREAM_API', 'AISSTREAM_API_KEY'],
     desktopRequiredSecrets: ['AISSTREAM_API_KEY'],
     fallback: 'AIS layer is disabled.',
   },
@@ -270,7 +270,7 @@ function readStoredToggles(): Record<RuntimeFeatureId, boolean> {
 }
 
 const URL_SECRET_KEYS = new Set<RuntimeSecretKey>([
-  'WS_RELAY_URL',
+  'AI_STREAM_API',
   'VITE_OPENSKY_RELAY_URL',
   'OLLAMA_API_URL',
 ]);

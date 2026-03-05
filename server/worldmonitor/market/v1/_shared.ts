@@ -8,7 +8,7 @@ import { CHROME_UA, yahooGate } from '../../../_shared/constants';
 // ========================================================================
 
 function getRelayBaseUrl(): string | null {
-  const relayUrl = process.env.WS_RELAY_URL;
+  const relayUrl = process.env.AI_STREAM_API;
   if (!relayUrl) return null;
   return relayUrl
     .replace(/^ws(s?):\/\//, 'http$1://')
@@ -207,7 +207,7 @@ export async function fetchYahooQuote(
   // Fallback: Railway relay (different IP, not rate-limited by Yahoo)
   const relayBase = getRelayBaseUrl();
   if (!relayBase) {
-    console.warn(`[Yahoo] ${symbol} relay skipped: WS_RELAY_URL not set`);
+    console.warn(`[Yahoo] ${symbol} relay skipped: AI_STREAM_API not set`);
     return null;
   }
   try {
