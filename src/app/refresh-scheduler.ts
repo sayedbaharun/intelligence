@@ -60,8 +60,7 @@ export class RefreshScheduler implements AppModule {
       }
     }, {
       intervalMs,
-      // De-escalate global refresh loops in background tabs to cut API volume.
-      hiddenMultiplier: 10,
+      pauseWhenHidden: true,
       refreshOnVisible: false,
       runImmediately: false,
       maxBackoffMultiplier: 4,

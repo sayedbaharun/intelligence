@@ -50,7 +50,7 @@ declare global {
 export interface LiveChannel {
   id: string;
   name: string;
-  handle: string; // YouTube channel handle (e.g., @bloomberg)
+  handle?: string; // YouTube channel handle (e.g., @bloomberg) - optional for HLS streams
   fallbackVideoId?: string; // Fallback if no live stream detected
   videoId?: string; // Dynamically fetched live video ID
   isLive?: boolean;
@@ -143,6 +143,7 @@ export const OPTIONAL_LIVE_CHANNELS: LiveChannel[] = [
   { id: 'iran-intl', name: 'Iran International', handle: '@IranIntl' },
   { id: 'cgtn-arabic', name: 'CGTN Arabic', handle: '@CGTNArabic' },
   { id: 'kan-11', name: 'Kan 11', handle: '@KAN11NEWS', fallbackVideoId: 'TCnaIE_SAtM' },
+  { id: 'i24-news', name: 'i24NEWS (Israel)', handle: '@i24NEWS_HE', fallbackVideoId: 'myKybZUK0IA' },
   { id: 'asharq-news', name: 'Asharq News', handle: '@asharqnews', fallbackVideoId: 'f6VpkfV7m4Y', useFallbackOnly: true },
   { id: 'aljazeera-arabic', name: 'AlJazeera Arabic', handle: '@AljazeeraChannel', fallbackVideoId: 'bNyUyrR0PHo', useFallbackOnly: true },
   // Africa
@@ -171,7 +172,7 @@ const _REGION_ENTRIES: { key: string; labelKey: string; channelIds: string[] }[]
   { key: 'eu', labelKey: 'components.liveNews.regionEurope', channelIds: ['sky', 'euronews', 'dw', 'france24', 'bbc-news', 'france24-en', 'welt', 'rtve', 'trt-haber', 'ntv-turkey', 'cnn-turk', 'tv-rain', 'rt', 'tvp-info', 'telewizja-republika', 'tagesschau24', 'euronews-fr', 'france24-fr', 'france-info', 'bfmtv', 'tv5monde-info', 'nrk1', 'aljazeera-balkans'] },
   { key: 'latam', labelKey: 'components.liveNews.regionLatinAmerica', channelIds: ['cnn-brasil', 'jovem-pan', 'record-news', 'band-jornalismo', 'tn-argentina', 'c5n', 'milenio', 'noticias-caracol', 'ntn24', 't13'] },
   { key: 'asia', labelKey: 'components.liveNews.regionAsia', channelIds: ['tbs-news', 'ann-news', 'ntv-news', 'cti-news', 'wion', 'ndtv', 'cna-asia', 'nhk-world', 'arirang-news', 'india-today', 'abp-news'] },
-  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'kan-11', 'asharq-news', 'aljazeera-arabic'] },
+  { key: 'me', labelKey: 'components.liveNews.regionMiddleEast', channelIds: ['alarabiya', 'aljazeera', 'al-hadath', 'sky-news-arabia', 'trt-world', 'iran-intl', 'cgtn-arabic', 'kan-11', 'i24-news', 'asharq-news', 'aljazeera-arabic'] },
   { key: 'africa', labelKey: 'components.liveNews.regionAfrica', channelIds: ['africanews', 'channels-tv', 'ktn-news', 'enca', 'sabc-news', 'arise-news'] },
   { key: 'oc', labelKey: 'components.liveNews.regionOceania', channelIds: ['abc-news-au'] },
 ];
@@ -389,7 +390,7 @@ export class LiveNewsPanel extends Panel {
 
     const label = document.createElement('div');
     label.style.cssText = 'color:var(--text-secondary);font-size:13px;';
-    label.textContent = this.activeChannel.name;
+    label.textContent = this.getChannelDisplayName(this.activeChannel);
 
     const playBtn = document.createElement('button');
     playBtn.className = 'offline-retry';
@@ -744,12 +745,18 @@ export class LiveNewsPanel extends Panel {
     this.syncPlayerState();
   }
 
+  private getChannelDisplayName(channel: LiveChannel): string {
+    return channel.hlsUrl && !channel.handle ? `${channel.name} 🔗` : channel.name;
+  }
+
   /** Creates a single channel tab button with click and drag handlers. */
   private createChannelButton(channel: LiveChannel): HTMLButtonElement {
     const btn = document.createElement('button');
     btn.className = `live-channel-btn ${channel.id === this.activeChannel.id ? 'active' : ''}`;
     btn.dataset.channelId = channel.id;
-    btn.textContent = channel.name;
+
+    btn.textContent = this.getChannelDisplayName(channel);
+
     btn.style.cursor = 'grab';
     btn.addEventListener('click', (e) => {
       if (this.suppressChannelClick) {
@@ -920,6 +927,14 @@ export class LiveNewsPanel extends Panel {
       channel.hlsUrl = undefined;
       return;
     }
+
+    // Skip fetchLiveVideoInfo for channels without handle (HLS-only)
+    if (!channel.handle) {
+      channel.videoId = channel.fallbackVideoId;
+      channel.isLive = false;
+      return;
+    }
+
     const info = await fetchLiveVideoInfo(channel.handle);
     channel.videoId = info.videoId || channel.fallbackVideoId;
     channel.isLive = !!info.videoId;
@@ -990,7 +1005,9 @@ export class LiveNewsPanel extends Panel {
     this.destroyPlayer();
     const watchUrl = channel.videoId
       ? `https://www.youtube.com/watch?v=${encodeURIComponent(channel.videoId)}`
-      : `https://www.youtube.com/${encodeURIComponent(channel.handle)}`;
+      : channel.handle
+      ? `https://www.youtube.com/${encodeURIComponent(channel.handle)}`
+      : 'https://www.youtube.com';
     const safeName = escapeHtml(channel.name);
 
     this.content.innerHTML = `
@@ -1346,7 +1363,9 @@ export class LiveNewsPanel extends Panel {
     const channel = this.activeChannel;
     const watchUrl = channel.videoId
       ? `https://www.youtube.com/watch?v=${encodeURIComponent(channel.videoId)}`
-      : `https://www.youtube.com/${encodeURIComponent(channel.handle)}`;
+      : channel.handle
+      ? `https://www.youtube.com/${encodeURIComponent(channel.handle)}`
+      : 'https://www.youtube.com';
 
     this.destroyPlayer();
     this.content.innerHTML = '';

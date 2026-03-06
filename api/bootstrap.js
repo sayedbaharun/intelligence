@@ -29,21 +29,34 @@ const BOOTSTRAP_CACHE_KEYS = {
   naturalEvents: 'natural:events:v1',
   flightDelays: 'aviation:delays-bootstrap:v1',
   insights: 'news:insights:v1',
+  predictions: 'prediction:markets-bootstrap:v1',
+  cryptoQuotes: 'market:crypto:v1',
+  gulfQuotes: 'market:gulf-quotes:v1',
+  stablecoinMarkets: 'market:stablecoins:v1',
+  unrestEvents: 'unrest:events:v1',
+  iranEvents: 'conflict:iran-events:v1',
+  ucdpEvents: 'conflict:ucdp-events:v1',
 };
 
 const SLOW_KEYS = new Set([
   'bisPolicy', 'bisExchange', 'bisCredit', 'minerals', 'giving',
   'sectors', 'etfFlows', 'shippingRates', 'wildfires', 'climateAnomalies',
   'cyberThreats', 'techReadiness', 'theaterPosture', 'naturalEvents',
+  'cryptoQuotes', 'gulfQuotes', 'stablecoinMarkets', 'unrestEvents', 'ucdpEvents',
 ]);
 const FAST_KEYS = new Set([
   'earthquakes', 'outages', 'serviceStatuses', 'macroSignals', 'chokepoints',
-  'marketQuotes', 'commodityQuotes', 'positiveGeoEvents', 'riskScores', 'flightDelays','insights',
+  'marketQuotes', 'commodityQuotes', 'positiveGeoEvents', 'riskScores', 'flightDelays','insights', 'predictions',
+  'iranEvents',
 ]);
 
 const TIER_CACHE = {
   slow: 'public, s-maxage=3600, stale-while-revalidate=600, stale-if-error=3600',
   fast: 'public, s-maxage=600, stale-while-revalidate=120, stale-if-error=900',
+};
+const TIER_CDN_CACHE = {
+  slow: 'public, s-maxage=7200, stale-while-revalidate=1800, stale-if-error=7200',
+  fast: 'public, s-maxage=1200, stale-while-revalidate=300, stale-if-error=1800',
 };
 
 const NEG_SENTINEL = '__WM_NEG__';
@@ -137,6 +150,7 @@ export default async function handler(req) {
       ...cors,
       'Content-Type': 'application/json',
       'Cache-Control': cacheControl,
+      'CDN-Cache-Control': (tier && TIER_CDN_CACHE[tier]) || TIER_CDN_CACHE.fast,
     },
   });
 }

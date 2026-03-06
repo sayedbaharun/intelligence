@@ -3,6 +3,9 @@
     { "path": "/api/briefing/gather", "schedule": "30 3,17 * * *" },
     { "path": "/api/briefing/analyze", "schedule": "0 4,18 * * *" }
   ],
+  "rewrites": [
+    { "source": "/((?!api|assets|favico|map-styles|data|textures|sw\\.js|manifest\\.webmanifest|offline\\.html|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|\\.well-known).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
@@ -24,13 +27,7 @@
       ]
     },
     {
-      "source": "/",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/index.html",
+      "source": "/((?!api|assets|favico|map-styles|data|textures|sw\\.js|manifest\\.webmanifest|offline\\.html|robots\\.txt|sitemap\\.xml|llms\\.txt|llms-full\\.txt|\\.well-known).*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
@@ -45,6 +42,24 @@
       "source": "/favico/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800" }
+      ]
+    },
+    {
+      "source": "/map-styles/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/textures/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {

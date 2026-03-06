@@ -159,6 +159,8 @@ export class MapComponent {
     nuclear: new Set(),
   };
   private boundVisibilityHandler!: () => void;
+  private handleThemeChange: () => void;
+  private resizeObserver: ResizeObserver | null = null;
   private renderScheduled = false;
   private lastRenderTime = 0;
   private readonly MIN_RENDER_INTERVAL_MS = 100;
@@ -211,16 +213,17 @@ export class MapComponent {
     this.loadMapData();
     this.setupResizeObserver();
 
-    window.addEventListener('theme-changed', () => {
+    this.handleThemeChange = () => {
       this.baseRendered = false;
       this.render();
-    });
+    };
+    window.addEventListener('theme-changed', this.handleThemeChange);
   }
 
   private setupResizeObserver(): void {
     let lastWidth = 0;
     let lastHeight = 0;
-    const resizeObserver = new ResizeObserver((entries) => {
+    this.resizeObserver = new ResizeObserver((entries) => {
       if (this.isResizing) return;
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
@@ -231,7 +234,7 @@ export class MapComponent {
         }
       }
     });
-    resizeObserver.observe(this.container);
+    this.resizeObserver.observe(this.container);
 
     // Re-render when page becomes visible again (after browser throttling)
     this.boundVisibilityHandler = () => {
@@ -255,7 +258,12 @@ export class MapComponent {
   }
 
   public destroy(): void {
+    window.removeEventListener('theme-changed', this.handleThemeChange);
     document.removeEventListener('visibilitychange', this.boundVisibilityHandler);
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
     if (this.healthCheckLoop) {
       this.healthCheckLoop.stop();
       this.healthCheckLoop = null;
@@ -423,12 +431,39 @@ export class MapComponent {
       return key ? t(key) : layer;
     };
 
+    const MAX_SVG_LAYERS = 9;
+    const enforceLayerLimit = () => {
+      const allBtns = Array.from(toggles.querySelectorAll<HTMLButtonElement>('.layer-toggle'));
+      const activeBtns = allBtns.filter(b => b.classList.contains('active'));
+      if (activeBtns.length > MAX_SVG_LAYERS) {
+        const excess = activeBtns.slice(MAX_SVG_LAYERS);
+        for (const btn of excess) {
+          btn.classList.remove('active');
+          const layer = btn.dataset.layer as keyof MapLayers | undefined;
+          if (layer) this.toggleLayer(layer);
+        }
+      }
+      const activeCount = allBtns.filter(b => b.classList.contains('active')).length;
+      allBtns.forEach(b => {
+        if (!b.classList.contains('active')) {
+          b.disabled = activeCount >= MAX_SVG_LAYERS;
+          b.classList.toggle('limit-reached', activeCount >= MAX_SVG_LAYERS);
+        } else {
+          b.disabled = false;
+          b.classList.remove('limit-reached');
+        }
+      });
+    };
+
     layers.forEach((layer) => {
       const btn = document.createElement('button');
       btn.className = `layer-toggle ${this.state.layers[layer] ? 'active' : ''}`;
       btn.dataset.layer = layer;
       btn.textContent = getLayerLabel(layer);
-      btn.addEventListener('click', () => this.toggleLayer(layer));
+      btn.addEventListener('click', () => {
+        this.toggleLayer(layer);
+        enforceLayerLimit();
+      });
       toggles.appendChild(btn);
     });
 
@@ -440,6 +475,7 @@ export class MapComponent {
     helpBtn.setAttribute('aria-label', t('components.deckgl.layerGuide'));
     helpBtn.addEventListener('click', () => this.showLayerHelp());
     toggles.appendChild(helpBtn);
+    enforceLayerLimit();
 
     return toggles;
   }
@@ -1454,7 +1490,7 @@ export class MapComponent {
         const pos = projection([ev.longitude, ev.latitude]);
         if (!pos || !Number.isFinite(pos[0]) || !Number.isFinite(pos[1])) return;
 
-        const size = ev.severity === 'high' ? 14 : ev.severity === 'medium' ? 11 : 8;
+        const size = (ev.severity === 'high' || ev.severity === 'critical') ? 14 : ev.severity === 'medium' ? 11 : 8;
         const color = ev.category === 'military' ? 'rgba(255,50,50,0.85)'
           : (ev.category === 'politics' || ev.category === 'diplomacy') ? 'rgba(255,165,0,0.8)'
             : 'rgba(255,255,0,0.7)';

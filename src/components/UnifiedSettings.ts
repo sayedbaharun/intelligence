@@ -3,7 +3,6 @@ import { PANEL_CATEGORY_MAP } from '@/config/panels';
 import { SITE_VARIANT } from '@/config/variant';
 import { LANGUAGES, changeLanguage, getCurrentLanguage, t } from '@/services/i18n';
 import { getAiFlowSettings, setAiFlowSetting, getStreamQuality, setStreamQuality, STREAM_QUALITY_OPTIONS } from '@/services/ai-flow-settings';
-import { getGlobeRenderScale, setGlobeRenderScale, GLOBE_RENDER_SCALE_OPTIONS, type GlobeRenderScale } from '@/services/globe-render-settings';
 import { getLiveStreamsAlwaysOn, setLiveStreamsAlwaysOn } from '@/services/live-stream-settings';
 import type { StreamQuality } from '@/services/ai-flow-settings';
 import { escapeHtml } from '@/utils/sanitize';
@@ -199,10 +198,6 @@ export class UnifiedSettings {
         return;
       }
 
-      if (target.id === 'us-globe-render-scale') {
-        setGlobeRenderScale(target.value as GlobeRenderScale);
-        return;
-      }
 
       if (target.id === 'us-live-streams-always-on') {
         setLiveStreamsAlwaysOn(target.checked);
@@ -216,10 +211,7 @@ export class UnifiedSettings {
         return;
       }
 
-      if (target.id === 'us-globe-mode') {
-        this.config.onMapModeChange?.(target.checked);
-        return;
-      } else if (target.id === 'us-cloud') {
+      if (target.id === 'us-cloud') {
         setAiFlowSetting('cloudLlm', target.checked);
         this.updateAiStatus();
       } else if (target.id === 'us-browser') {
@@ -352,46 +344,10 @@ export class UnifiedSettings {
   private renderGeneralContent(): string {
     const settings = getAiFlowSettings();
     const currentLang = getCurrentLanguage();
-    const globeEnabled = this.config.isGlobeMode?.() ?? false;
-
     let html = '';
 
     // Map section
     html += `<div class="ai-flow-section-label">${t('components.insights.sectionMap')}</div>`;
-
-    // Globe / flat-map mode toggle
-    html += `
-      <div class="ai-flow-toggle-row">
-        <div class="ai-flow-toggle-label-wrap">
-          <div class="ai-flow-toggle-label">3D Globe View</div>
-          <div class="ai-flow-toggle-desc">Switch between flat map and interactive 3D globe (like Sentinel). Zoom, rotate, and explore in three dimensions.</div>
-        </div>
-        <label class="ai-flow-switch">
-          <input type="checkbox" id="us-globe-mode"${globeEnabled ? ' checked' : ''}>
-          <span class="ai-flow-slider"></span>
-        </label>
-      </div>`;
-
-    // Globe render quality (pixel ratio)
-    const globeScale = getGlobeRenderScale();
-    const globeRenderLabelKey = 'components.insights.globeRenderQualityLabel';
-    const globeRenderDescKey = 'components.insights.globeRenderQualityDesc';
-    const globeRenderLabel = t(globeRenderLabelKey);
-    const globeRenderDesc = t(globeRenderDescKey);
-    html += `<div class="ai-flow-toggle-row">
-      <div class="ai-flow-toggle-label-wrap">
-        <div class="ai-flow-toggle-label">${globeRenderLabel === globeRenderLabelKey ? 'Globe render quality' : globeRenderLabel}</div>
-        <div class="ai-flow-toggle-desc">${globeRenderDesc === globeRenderDescKey ? 'Controls the globe canvas resolution. Higher values look sharper on 4K displays but can melt GPUs.' : globeRenderDesc}</div>
-      </div>
-    </div>`;
-    html += `<select class="unified-settings-select" id="us-globe-render-scale">`;
-    for (const opt of GLOBE_RENDER_SCALE_OPTIONS) {
-      const selected = opt.value === globeScale ? ' selected' : '';
-      const translatedLabel = t(opt.labelKey);
-      const label = translatedLabel === opt.labelKey ? opt.fallbackLabel : translatedLabel;
-      html += `<option value="${opt.value}"${selected}>${label}</option>`;
-    }
-    html += `</select>`;
 
     html += this.toggleRowHtml('us-map-flash', t('components.insights.mapFlashLabel'), t('components.insights.mapFlashDesc'), settings.mapNewsFlash);
 
@@ -453,6 +409,9 @@ export class UnifiedSettings {
       html += `<option value="${lang.code}"${selected}>${lang.flag} ${lang.label}</option>`;
     }
     html += `</select>`;
+    if (currentLang === 'vi') {
+      html += `<div class="ai-flow-toggle-desc">${t('components.languageSelector.mapLabelsFallbackVi')}</div>`;
+    }
 
     // Data Management section
     html += `<div class="ai-flow-section-label">${t('components.settings.dataManagementLabel')}</div>`;

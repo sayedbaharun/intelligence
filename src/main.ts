@@ -167,6 +167,21 @@ Sentry.init({
     /Qt\(\) is not a function/,
     /out of memory/,
     /Could not connect to the server/,
+    /shaderSource must be an instance of WebGLShader/,
+    /Failed to initialize WebGL/,
+    /opacityVertexArray\.length/,
+    /Length of new data is \d+, which doesn't match current length of/,
+    /^AJAXError:.*(?:Load failed|Unauthorized|\(401\))/,
+    /^NetworkError: Load failed$/,
+    /^A network error occurred\.?$/,
+    /nmhCrx is not defined/,
+    /navigationPerformanceLoggerJavascriptInterface/,
+    /jQuery is not defined/,
+    /illegal UTF-16 sequence/,
+    /detectIncognito/,
+    /Cannot read properties of null \(reading '__uv'\)/,
+    /Can't find variable: p\d+/,
+    /^timeout$/,
   ],
   beforeSend(event) {
     const msg = event.exception?.values?.[0]?.value ?? '';
@@ -187,12 +202,18 @@ Sentry.init({
       const hasSourceMapped = nonSentryFrames.some(f => /\.(ts|tsx)$/.test(f.filename ?? '') || /^src\//.test(f.filename ?? ''));
       if (!hasSourceMapped) return null;
     }
+    // Suppress Three.js OrbitControls touch crashes (finger lifted during pinch-zoom)
+    if (/undefined is not an object \(evaluating 't\.x'\)|Cannot read properties of undefined \(reading 'x'\)/.test(msg)) {
+      if (frames.some(f => /_handleTouchStart|Dolly|eie|jse/.test(f.function ?? ''))) return null;
+    }
     // Suppress deck.gl/maplibre null-access crashes with no usable stack trace (requestAnimationFrame wrapping)
     if (/null is not an object \(evaluating '\w{1,3}\.(id|type|style)'\)/.test(msg) && frames.length === 0) return null;
     // Suppress TypeErrors from anonymous/injected scripts (no real source files)
     if (/^TypeError:/.test(msg) && frames.length > 0 && frames.every(f => !f.filename || f.filename === '<anonymous>' || /^blob:/.test(f.filename))) return null;
     // Suppress errors originating entirely from blob: URLs (browser extensions)
     if (frames.length > 0 && frames.every(f => /^blob:/.test(f.filename ?? ''))) return null;
+    // Suppress errors originating from UV proxy (Ultraviolet service worker)
+    if (frames.some(f => /\/uv\/service\//.test(f.filename ?? '') || /uv\.handler/.test(f.filename ?? ''))) return null;
     // Suppress YouTube IFrame widget API internal errors
     if (frames.some(f => /www-widgetapi\.js/.test(f.filename ?? ''))) return null;
     return event;
@@ -308,17 +329,40 @@ if ('__TAURI_INTERNALS__' in window || '__TAURI__' in window) {
 }
 
 if (!('__TAURI_INTERNALS__' in window) && !('__TAURI__' in window) && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', { scope: '/' })
-    .then((registration) => {
-      console.log('[PWA] Service worker registered');
-      const swUpdateInterval = setInterval(async () => {
-        if (!navigator.onLine) return;
-        try { await registration.update(); } catch {}
-      }, 60 * 60 * 1000);
-      // Expose interval ID for cleanup/debugging
-      (window as unknown as Record<string, unknown>).__swUpdateInterval = swUpdateInterval;
-    })
-    .catch((err) => {
-      console.warn('[PWA] Service worker registration failed:', err);
+  // One-time nuke: clear stale SWs and caches from old deploys, then re-register fresh.
+  // Safe to remove after 2026-03-20 when all users have cycled through.
+  const nukeKey = 'wm-sw-nuked-v2';
+  let alreadyNuked = false;
+  try { alreadyNuked = !!localStorage.getItem(nukeKey); } catch { /* private browsing */ }
+  if (!alreadyNuked) {
+    try { localStorage.setItem(nukeKey, '1'); } catch { /* best effort */ }
+    navigator.serviceWorker.getRegistrations().then(async (regs) => {
+      await Promise.all(regs.map(r => r.unregister()));
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+      console.log('[PWA] Nuked stale service workers and caches');
+      window.location.reload();
     });
+  } else {
+    // Auto-reload when a new SW takes control (fixes stale HTML after deploys)
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then((registration) => {
+        console.log('[PWA] Service worker registered');
+        const swUpdateInterval = setInterval(async () => {
+          if (!navigator.onLine) return;
+          try { await registration.update(); } catch {}
+        }, 5 * 60 * 1000);
+        (window as unknown as Record<string, unknown>).__swUpdateInterval = swUpdateInterval;
+      })
+      .catch((err) => {
+        console.warn('[PWA] Service worker registration failed:', err);
+      });
+  }
 }
