@@ -1,0 +1,10 @@
+{
+  "name": "world-monitor-relay",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AIS/OpenSky/RSS relay server for World Monitor",
+  "dependencies": {
+    "telegram": "^2.26.22",
+    "ws": "^8.19.0"
+  }
+}

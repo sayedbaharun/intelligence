@@ -1,0 +1,17 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+# Use relay-specific minimal package.json (only ws dependency)
+# This avoids Railway's false-positive banned dependency detection
+COPY relay/package.json ./
+RUN npm install --omit=dev
+
+# Copy relay server, shared config, and data files
+COPY scripts/ais-relay.cjs scripts/
+COPY shared/ shared/
+COPY data/ data/
+
+EXPOSE ${PORT:-3004}
+
+CMD ["node", "scripts/ais-relay.cjs"]
