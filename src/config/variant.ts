@@ -20,5 +20,5 @@ export const SITE_VARIANT: string = (() => {
     return import.meta.env.VITE_VARIANT || 'full';
   }
 
-  return 'full';
+  return import.meta.env.VITE_VARIANT || 'full';
 })();
