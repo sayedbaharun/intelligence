@@ -197,76 +197,68 @@ export const FEEDS: Record<string, Feed[]> = {
     { name: 'Y Combinator', url: rss('https://news.ycombinator.com/rss') },
   ],
 
-  uagcc: [
-    { name: 'Gulf News', url: rss('https://news.google.com/rss/search?q=site:gulfnews.com+(UAE+OR+Dubai+OR+Abu+Dhabi)+when:7d&hl=en-US&gl=US&ceid=US:en') },
+  uaeBusiness: [
+    { name: 'Gulf News Business', url: rss('https://news.google.com/rss/search?q=site:gulfnews.com+business+(UAE+OR+Dubai+OR+Abu+Dhabi)+when:7d&hl=en-US&gl=US&ceid=US:en') },
     { name: 'Zawya', url: rss('https://news.google.com/rss/search?q=site:zawya.com+(UAE+OR+GCC+OR+Middle+East)+when:7d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'WAM', url: rss('https://news.google.com/rss/search?q=site:wam.ae+OR+"Emirates+News+Agency"+when:7d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'Khaleej Times', url: rss('https://news.google.com/rss/search?q=site:khaleejtimes.com+(UAE+OR+Dubai)+when:7d&hl=en-US&gl=US&ceid=US:en') },
-    { name: 'Emirates News Agency', url: rss('https://news.google.com/rss/search?q=site:wam.ae+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'UAE Central Bank', url: rss('https://news.google.com/rss/search?q=("UAE+Central+Bank"+OR+CBUAE)+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'DIFC News', url: rss('https://news.google.com/rss/search?q=DIFC+("Dubai+International+Financial+Centre")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'ADGM Updates', url: rss('https://news.google.com/rss/search?q=ADGM+("Abu+Dhabi+Global+Market")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+
+  aiResearch: [
+    { name: 'Hugging Face Blog', url: rss('https://huggingface.co/blog/feed.xml') },
+    { name: 'OpenAI Blog', url: rss('https://news.google.com/rss/search?q=site:openai.com+blog+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Anthropic Blog', url: rss('https://news.google.com/rss/search?q=site:anthropic.com+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Google DeepMind', url: rss('https://news.google.com/rss/search?q=site:deepmind.google+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'AI Product Launches', url: rss('https://news.google.com/rss/search?q=("AI+launch"+OR+"AI+product"+OR+"AI+startup"+OR+"AI+tool")+launch+when:3d&hl=en-US&gl=US&ceid=US:en') },
   ],
 };
 
-// Panel configuration — all finance panels + geopolitical + tech + custom
+// Panel configuration — ordered by daily priority flow
 export const DEFAULT_PANELS: Record<string, PanelConfig> = {
-  // Core (priority 1)
-  map: { name: 'Operator Map', enabled: true, priority: 1 },
-  'live-news': { name: 'Headlines', enabled: true, priority: 1 },
-  insights: { name: 'AI Market Insights', enabled: true, priority: 1 },
+  // Priority 1 — top of grid, daily essentials
+  map: { name: 'Operator Command Map', enabled: true, priority: 1 },
+  'live-news': { name: 'Live Headlines', enabled: true, priority: 1 },
+  'live-webcams': { name: 'Live Webcams', enabled: true, priority: 1 },
+  insights: { name: 'AI Intelligence Brief', enabled: true, priority: 1 },
   'strategic-posture': { name: 'AI Strategic Posture', enabled: true, priority: 1 },
-  cii: { name: 'Country Instability', enabled: true, priority: 1 },
+  'macro-signals': { name: 'Market Radar', enabled: true, priority: 1 },
   markets: { name: 'Live Markets', enabled: true, priority: 1 },
   forex: { name: 'Forex & Currencies', enabled: true, priority: 1 },
-  bonds: { name: 'Fixed Income', enabled: true, priority: 1 },
   commodities: { name: 'Commodities & Futures', enabled: true, priority: 1 },
+  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
   crypto: { name: 'Crypto & Digital Assets', enabled: true, priority: 1 },
-  centralbanks: { name: 'Central Bank Watch', enabled: true, priority: 1 },
-  economic: { name: 'Economic Data', enabled: true, priority: 1 },
-
-  // Geopolitical (priority 1)
-  geopolitics: { name: 'World News', enabled: true, priority: 1 },
+  cii: { name: 'Country Instability Index', enabled: true, priority: 1 },
+  'strategic-risk': { name: 'Strategic Risk Overview', enabled: true, priority: 1 },
+  polymarket: { name: 'Prediction Markets', enabled: true, priority: 1 },
+  geopolitics: { name: 'Geopolitics', enabled: true, priority: 1 },
   middleeast: { name: 'Middle East', enabled: true, priority: 1 },
   energy: { name: 'Energy & Resources', enabled: true, priority: 1 },
-  thinktanks: { name: 'Think Tanks', enabled: true, priority: 1 },
-  intel: { name: 'Intel Feed', enabled: true, priority: 1 },
-
-  // Tech/AI (priority 1)
-  ai: { name: 'AI/ML News', enabled: true, priority: 1 },
-  startups: { name: 'Startups & VC', enabled: true, priority: 1 },
-
-  // Trading tools (priority 1)
-  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
-  'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 1 },
-  'macro-signals': { name: 'Market Radar', enabled: true, priority: 1 },
-  heatmap: { name: 'Sector Heatmap', enabled: true, priority: 1 },
   'trade-policy': { name: 'Trade Policy', enabled: true, priority: 1 },
-  'supply-chain': { name: 'Supply Chain', enabled: true, priority: 1 },
-  ipo: { name: 'IPOs, Earnings & M&A', enabled: true, priority: 1 },
-  'gulf-economies': { name: 'Gulf Economies', enabled: true, priority: 1 },
 
-  // Priority 2
-  'live-webcams': { name: 'Live Webcams', enabled: true, priority: 2 },
-  'business-radar': { name: 'Business Radar', enabled: true, priority: 2 },
-  'markets-news': { name: 'Markets News', enabled: true, priority: 2 },
+  // Priority 2 — secondary panels, still enabled
   'ai-industry-tracker': { name: 'AI Industry Tracker', enabled: true, priority: 2 },
-  'commodities-news': { name: 'Commodities News', enabled: true, priority: 2 },
-  'crypto-news': { name: 'Crypto News', enabled: true, priority: 2 },
-  'economic-news': { name: 'Economic News', enabled: true, priority: 2 },
-  derivatives: { name: 'Derivatives & Options', enabled: true, priority: 2 },
-  fintech: { name: 'Fintech & Trading Tech', enabled: true, priority: 2 },
-  regulation: { name: 'Financial Regulation', enabled: true, priority: 2 },
-  institutional: { name: 'Hedge Funds & PE', enabled: true, priority: 2 },
-  analysis: { name: 'Market Analysis', enabled: true, priority: 2 },
+  ai: { name: 'AI/ML News', enabled: true, priority: 2 },
+  tech: { name: 'Technology', enabled: true, priority: 2 },
+  bonds: { name: 'Fixed Income', enabled: true, priority: 2 },
+  centralbanks: { name: 'Central Bank Watch', enabled: true, priority: 2 },
+  economic: { name: 'Economic Indicators', enabled: true, priority: 2 },
+  heatmap: { name: 'Sector Heatmap', enabled: true, priority: 2 },
   'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
   stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
-  security: { name: 'Cybersecurity', enabled: true, priority: 2 },
-  layoffs: { name: 'Layoffs Tracker', enabled: true, priority: 2 },
-  tech: { name: 'Technology', enabled: true, priority: 2 },
+  'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 2 },
+  'gulf-economies': { name: 'Gulf Economies', enabled: true, priority: 2 },
   'gcc-investments': { name: 'GCC Investments', enabled: true, priority: 2 },
   gccNews: { name: 'GCC Business News', enabled: true, priority: 2 },
+  uaeBusiness: { name: 'UAE Business Intel', enabled: true, priority: 2 },
   investmentIntel: { name: 'Deal Flow & SWF', enabled: true, priority: 2 },
-  uagcc: { name: 'UAE/GCC News', enabled: true, priority: 2 },
-  polymarket: { name: 'Predictions', enabled: true, priority: 2 },
-  'airline-intel': { name: 'Airline Intelligence', enabled: true, priority: 2 },
+  aiResearch: { name: 'AI Research & Labs', enabled: true, priority: 2 },
+  startups: { name: 'Startups & VC', enabled: true, priority: 2 },
+  thinktanks: { name: 'Think Tanks', enabled: true, priority: 2 },
+  finance: { name: 'Financial News', enabled: true, priority: 2 },
+  'supply-chain': { name: 'Supply Chain', enabled: true, priority: 2 },
+  'telegram-intel': { name: 'Telegram Intel', enabled: true, priority: 2 },
+  'security-advisories': { name: 'Security Advisories', enabled: true, priority: 2 },
   'world-clock': { name: 'World Clock', enabled: true, priority: 2 },
   monitors: { name: 'My Monitors', enabled: true, priority: 2 },
 };
@@ -321,7 +313,7 @@ export const DEFAULT_MAP_LAYERS: MapLayers = {
   renewableInstallations: false,
   tradeRoutes: true,
   iranAttacks: false,
-  ciiChoropleth: false,
+  ciiChoropleth: true,
   dayNight: false,
 };
 
