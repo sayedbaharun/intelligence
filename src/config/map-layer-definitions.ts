@@ -1,7 +1,7 @@
 import type { MapLayers } from '@/types';
 
 export type MapRenderer = 'flat' | 'globe';
-export type MapVariant = 'full' | 'tech' | 'finance' | 'happy';
+export type MapVariant = 'full' | 'tech' | 'finance' | 'happy' | 'operator';
 
 export interface LayerDefinition {
   key: keyof MapLayers;
@@ -93,6 +93,19 @@ const VARIANT_LAYER_ORDER: Record<MapVariant, Array<keyof MapLayers>> = {
   happy: [
     'positiveEvents', 'kindness', 'happiness',
     'speciesRecovery', 'renewableInstallations',
+  ],
+  operator: [
+    // Geopolitical risk (top)
+    'conflicts', 'hotspots', 'sanctions', 'military', 'ciiChoropleth',
+    // Finance & commodities
+    'stockExchanges', 'financialCenters', 'centralBanks', 'commodityHubs',
+    'gulfInvestments', 'tradeRoutes', 'economic',
+    // Infrastructure
+    'cables', 'pipelines', 'waterways', 'outages', 'datacenters',
+    // Tech ecosystem
+    'startupHubs', 'techHQs',
+    // Environmental & utility
+    'weather', 'natural', 'cyberThreats', 'minerals', 'dayNight',
   ],
 };
 
