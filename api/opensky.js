@@ -12,4 +12,17 @@ export default createRelayHandler({
     const xCache = response.headers.get('x-cache');
     return xCache ? { 'X-Cache': xCache } : {};
   },
+  fallback: (_req, corsHeaders) => new Response(JSON.stringify({
+    states: [],
+    time: Math.floor(Date.now() / 1000),
+    source: 'fallback',
+    error: 'Relay unavailable - no flight data',
+  }), {
+    status: 503,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=30, s-maxage=60, stale-while-revalidate=30',
+      ...corsHeaders,
+    },
+  }),
 });

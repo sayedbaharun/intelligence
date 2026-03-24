@@ -64,13 +64,19 @@ export default async function handler(req) {
       },
     });
   } catch (error) {
-    const isTimeout = error?.name === 'AbortError';
     return new Response(JSON.stringify({
-      error: isTimeout ? 'Relay timeout' : 'Relay request failed',
-      details: error?.message || String(error),
+      items: [],
+      count: 0,
+      timestamp: new Date().toISOString(),
+      source: 'fallback',
+      error: 'Relay unavailable - no Telegram feed data',
     }), {
-      status: isTimeout ? 504 : 502,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders },
+      status: 503,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=30, s-maxage=60, stale-while-revalidate=30',
+        ...corsHeaders,
+      },
     });
   }
 }

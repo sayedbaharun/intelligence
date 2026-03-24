@@ -8,8 +8,8 @@
     "telegram:session": "node telegram/session-auth.mjs"
   },
   "dependencies": {
-    "ws": "^8.18.0",
-    "telegram": "^2.22.2"
+    "telegram": "^2.26.22",
+    "ws": "^8.18.0"
   },
   "engines": {
     "node": ">=18"

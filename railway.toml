@@ -1,0 +1,10 @@
+[build]
+dockerfilePath = "Dockerfile.relay"
+
+[deploy]
+startCommand = "node scripts/ais-relay.cjs"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+numReplicas = 1

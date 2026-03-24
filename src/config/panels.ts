@@ -474,6 +474,175 @@ const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
 };
 
 // ============================================
+// OPERATOR VARIANT (Trading + Geopolitics + AI + UAE/GCC)
+// ============================================
+const OPERATOR_PANELS: Record<string, PanelConfig> = {
+  // Core (priority 1)
+  map: { name: 'Operator Map', enabled: true, priority: 1 },
+  'live-news': { name: 'Headlines', enabled: true, priority: 1 },
+  insights: { name: 'AI Market Insights', enabled: true, priority: 1 },
+  'strategic-posture': { name: 'AI Strategic Posture', enabled: true, priority: 1 },
+  cii: { name: 'Country Instability', enabled: true, priority: 1 },
+  markets: { name: 'Live Markets', enabled: true, priority: 1 },
+  forex: { name: 'Forex & Currencies', enabled: true, priority: 1 },
+  bonds: { name: 'Fixed Income', enabled: true, priority: 1 },
+  commodities: { name: 'Commodities & Futures', enabled: true, priority: 1 },
+  crypto: { name: 'Crypto & Digital Assets', enabled: true, priority: 1 },
+  centralbanks: { name: 'Central Bank Watch', enabled: true, priority: 1 },
+  economic: { name: 'Economic Data', enabled: true, priority: 1 },
+  // Geopolitical (priority 1)
+  geopolitics: { name: 'World News', enabled: true, priority: 1 },
+  middleeast: { name: 'Middle East', enabled: true, priority: 1 },
+  energy: { name: 'Energy & Resources', enabled: true, priority: 1 },
+  thinktanks: { name: 'Think Tanks', enabled: true, priority: 1 },
+  intel: { name: 'Intel Feed', enabled: true, priority: 1 },
+  // Tech/AI (priority 1)
+  ai: { name: 'AI/ML News', enabled: true, priority: 1 },
+  startups: { name: 'Startups & VC', enabled: true, priority: 1 },
+  // Trading tools (priority 1)
+  'precious-metals-command': { name: 'Precious Metals Command', enabled: true, priority: 1 },
+  'dubai-real-estate-radar': { name: 'Dubai Real Estate Radar', enabled: true, priority: 1 },
+  'macro-signals': { name: 'Market Radar', enabled: true, priority: 1 },
+  heatmap: { name: 'Sector Heatmap', enabled: true, priority: 1 },
+  'trade-policy': { name: 'Trade Policy', enabled: true, priority: 1 },
+  'supply-chain': { name: 'Supply Chain', enabled: true, priority: 1 },
+  ipo: { name: 'IPOs, Earnings & M&A', enabled: true, priority: 1 },
+  'gulf-economies': { name: 'Gulf Economies', enabled: true, priority: 1 },
+  // Priority 2
+  'live-webcams': { name: 'Live Webcams', enabled: true, priority: 2 },
+  'business-radar': { name: 'Business Radar', enabled: true, priority: 2 },
+  'markets-news': { name: 'Markets News', enabled: true, priority: 2 },
+  'ai-industry-tracker': { name: 'AI Industry Tracker', enabled: true, priority: 2 },
+  'commodities-news': { name: 'Commodities News', enabled: true, priority: 2 },
+  'crypto-news': { name: 'Crypto News', enabled: true, priority: 2 },
+  'economic-news': { name: 'Economic News', enabled: true, priority: 2 },
+  derivatives: { name: 'Derivatives & Options', enabled: true, priority: 2 },
+  fintech: { name: 'Fintech & Trading Tech', enabled: true, priority: 2 },
+  regulation: { name: 'Financial Regulation', enabled: true, priority: 2 },
+  institutional: { name: 'Hedge Funds & PE', enabled: true, priority: 2 },
+  analysis: { name: 'Market Analysis', enabled: true, priority: 2 },
+  'etf-flows': { name: 'BTC ETF Tracker', enabled: true, priority: 2 },
+  stablecoins: { name: 'Stablecoins', enabled: true, priority: 2 },
+  security: { name: 'Cybersecurity', enabled: true, priority: 2 },
+  layoffs: { name: 'Layoffs Tracker', enabled: true, priority: 2 },
+  tech: { name: 'Technology', enabled: true, priority: 2 },
+  'gcc-investments': { name: 'GCC Investments', enabled: true, priority: 2 },
+  gccNews: { name: 'GCC Business News', enabled: true, priority: 2 },
+  investmentIntel: { name: 'Deal Flow & SWF', enabled: true, priority: 2 },
+  uagcc: { name: 'UAE/GCC News', enabled: true, priority: 2 },
+  polymarket: { name: 'Predictions', enabled: true, priority: 2 },
+  'airline-intel': { name: 'Airline Intelligence', enabled: true, priority: 2 },
+  'world-clock': { name: 'World Clock', enabled: true, priority: 2 },
+  monitors: { name: 'My Monitors', enabled: true, priority: 2 },
+};
+
+const OPERATOR_MAP_LAYERS: MapLayers = {
+  gpsJamming: false,
+
+  conflicts: true,
+  bases: false,
+  cables: true,
+  pipelines: true,
+  hotspots: true,
+  ais: false,
+  nuclear: false,
+  irradiators: false,
+  sanctions: true,
+  weather: true,
+  economic: true,
+  waterways: true,
+  outages: true,
+  cyberThreats: false,
+  datacenters: false,
+  protests: false,
+  flights: false,
+  military: false,
+  natural: true,
+  spaceports: false,
+  minerals: false,
+  fires: false,
+  // Data source layers
+  ucdpEvents: false,
+  displacement: false,
+  climate: false,
+  // Tech layers (minimal)
+  startupHubs: false,
+  cloudRegions: false,
+  accelerators: false,
+  techHQs: false,
+  techEvents: false,
+  // Finance layers (all on)
+  stockExchanges: true,
+  financialCenters: true,
+  centralBanks: true,
+  commodityHubs: false,
+  gulfInvestments: false,
+  // Happy layers (all off)
+  positiveEvents: false,
+  kindness: false,
+  happiness: false,
+  speciesRecovery: false,
+  renewableInstallations: false,
+  tradeRoutes: true,
+  iranAttacks: false,
+  ciiChoropleth: false,
+  dayNight: false,
+};
+
+const OPERATOR_MOBILE_MAP_LAYERS: MapLayers = {
+  gpsJamming: false,
+
+  conflicts: true,
+  bases: false,
+  cables: false,
+  pipelines: false,
+  hotspots: true,
+  ais: false,
+  nuclear: false,
+  irradiators: false,
+  sanctions: false,
+  weather: false,
+  economic: true,
+  waterways: false,
+  outages: true,
+  cyberThreats: false,
+  datacenters: false,
+  protests: false,
+  flights: false,
+  military: false,
+  natural: true,
+  spaceports: false,
+  minerals: false,
+  fires: false,
+  // Data source layers
+  ucdpEvents: false,
+  displacement: false,
+  climate: false,
+  // Tech layers (disabled on mobile)
+  startupHubs: false,
+  cloudRegions: false,
+  accelerators: false,
+  techHQs: false,
+  techEvents: false,
+  // Finance layers (limited on mobile)
+  stockExchanges: true,
+  financialCenters: false,
+  centralBanks: true,
+  commodityHubs: false,
+  gulfInvestments: false,
+  // Happy layers
+  positiveEvents: false,
+  kindness: false,
+  happiness: false,
+  speciesRecovery: false,
+  renewableInstallations: false,
+  tradeRoutes: false,
+  iranAttacks: false,
+  ciiChoropleth: false,
+  dayNight: false,
+};
+
+// ============================================
 // HAPPY VARIANT (Good News & Progress)
 // ============================================
 const HAPPY_PANELS: Record<string, PanelConfig> = {
@@ -598,9 +767,9 @@ const HAPPY_MOBILE_MAP_LAYERS: MapLayers = {
 // ============================================
 // VARIANT-AWARE EXPORTS
 // ============================================
-export const DEFAULT_PANELS = SITE_VARIANT === 'happy' ? HAPPY_PANELS : SITE_VARIANT === 'tech' ? TECH_PANELS : SITE_VARIANT === 'finance' ? FINANCE_PANELS : FULL_PANELS;
-export const DEFAULT_MAP_LAYERS = SITE_VARIANT === 'happy' ? HAPPY_MAP_LAYERS : SITE_VARIANT === 'tech' ? TECH_MAP_LAYERS : SITE_VARIANT === 'finance' ? FINANCE_MAP_LAYERS : FULL_MAP_LAYERS;
-export const MOBILE_DEFAULT_MAP_LAYERS = SITE_VARIANT === 'happy' ? HAPPY_MOBILE_MAP_LAYERS : SITE_VARIANT === 'tech' ? TECH_MOBILE_MAP_LAYERS : SITE_VARIANT === 'finance' ? FINANCE_MOBILE_MAP_LAYERS : FULL_MOBILE_MAP_LAYERS;
+export const DEFAULT_PANELS = SITE_VARIANT === 'happy' ? HAPPY_PANELS : SITE_VARIANT === 'operator' ? OPERATOR_PANELS : SITE_VARIANT === 'tech' ? TECH_PANELS : SITE_VARIANT === 'finance' ? FINANCE_PANELS : FULL_PANELS;
+export const DEFAULT_MAP_LAYERS = SITE_VARIANT === 'happy' ? HAPPY_MAP_LAYERS : SITE_VARIANT === 'operator' ? OPERATOR_MAP_LAYERS : SITE_VARIANT === 'tech' ? TECH_MAP_LAYERS : SITE_VARIANT === 'finance' ? FINANCE_MAP_LAYERS : FULL_MAP_LAYERS;
+export const MOBILE_DEFAULT_MAP_LAYERS = SITE_VARIANT === 'happy' ? HAPPY_MOBILE_MAP_LAYERS : SITE_VARIANT === 'operator' ? OPERATOR_MOBILE_MAP_LAYERS : SITE_VARIANT === 'tech' ? TECH_MOBILE_MAP_LAYERS : SITE_VARIANT === 'finance' ? FINANCE_MOBILE_MAP_LAYERS : FULL_MOBILE_MAP_LAYERS;
 
 /** Maps map-layer toggle keys to their data-freshness source IDs (single source of truth). */
 export const LAYER_TO_SOURCE: Partial<Record<keyof MapLayers, DataSourceId[]>> = {
@@ -714,6 +883,38 @@ export const PANEL_CATEGORY_MAP: Record<string, { labelKey: string; panelKeys: s
     labelKey: 'header.panelCatGulfMena',
     panelKeys: ['gulf-economies', 'dubai-real-estate-radar', 'gcc-investments', 'gccNews', 'monitors', 'world-clock'],
     variants: ['finance'],
+  },
+
+  // Operator variant
+  opMarkets: {
+    labelKey: 'header.panelCatMarkets',
+    panelKeys: ['markets', 'markets-news', 'forex', 'bonds', 'commodities', 'precious-metals-command', 'dubai-real-estate-radar', 'commodities-news', 'crypto', 'crypto-news', 'heatmap', 'macro-signals', 'analysis', 'polymarket'],
+    variants: ['operator'],
+  },
+  opEconBanks: {
+    labelKey: 'header.panelCatCentralBanks',
+    panelKeys: ['centralbanks', 'economic', 'trade-policy', 'supply-chain', 'economic-news', 'ipo', 'derivatives'],
+    variants: ['operator'],
+  },
+  opGeopolitics: {
+    labelKey: 'header.panelCatIntelligence',
+    panelKeys: ['strategic-posture', 'cii', 'intel', 'geopolitics', 'middleeast', 'energy', 'thinktanks'],
+    variants: ['operator'],
+  },
+  opTechAi: {
+    labelKey: 'header.panelCatTechAi',
+    panelKeys: ['ai', 'ai-industry-tracker', 'tech', 'startups', 'security', 'layoffs'],
+    variants: ['operator'],
+  },
+  opDealsGulf: {
+    labelKey: 'header.panelCatDeals',
+    panelKeys: ['institutional', 'fintech', 'regulation', 'investmentIntel', 'etf-flows', 'stablecoins'],
+    variants: ['operator'],
+  },
+  opGulfMena: {
+    labelKey: 'header.panelCatGulfMena',
+    panelKeys: ['gulf-economies', 'gcc-investments', 'gccNews', 'uagcc', 'airline-intel', 'monitors', 'world-clock'],
+    variants: ['operator'],
   },
 };
 
