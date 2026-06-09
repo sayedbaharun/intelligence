@@ -261,6 +261,59 @@ export const VARIANT_FEEDS: Record<string, Record<string, ServerFeed[]>> = {
     ],
   },
 
+  operator: {
+    markets: [
+      { name: 'CNBC', url: 'https://www.cnbc.com/id/100003114/device/rss/rss.html' },
+      { name: 'Reuters Markets', url: gn('site:reuters.com markets stocks when:1d') },
+      { name: 'Bloomberg Markets', url: gn('site:bloomberg.com markets when:1d') },
+    ],
+    commodities: [
+      { name: 'Oil & Gas', url: gn('(oil price OR OPEC OR "natural gas" OR "crude oil" OR WTI OR Brent) when:1d') },
+      { name: 'Gold & Metals', url: gn('(gold price OR silver price OR copper OR platinum OR "precious metals") when:2d') },
+    ],
+    crypto: [
+      { name: 'CoinDesk', url: 'https://www.coindesk.com/arc/outboundfeeds/rss/' },
+      { name: 'Crypto News', url: gn('(bitcoin OR ethereum OR crypto OR "digital assets") when:1d') },
+    ],
+    ai: [
+      { name: 'AI News', url: gn('(OpenAI OR Anthropic OR Google AI OR "large language model" OR ChatGPT OR Claude OR "AI model") when:2d') },
+      { name: 'AI Product Launches', url: gn('("AI launch" OR "AI product" OR "AI startup" OR "AI tool") launch when:3d') },
+    ],
+    gccNews: [
+      { name: 'Arabian Business', url: gn('site:arabianbusiness.com (Saudi Arabia OR UAE OR GCC) when:7d') },
+      { name: 'The National', url: gn('site:thenationalnews.com (Abu Dhabi OR UAE OR Saudi) when:7d') },
+      { name: 'Arab News', url: gn('site:arabnews.com (Saudi Arabia OR investment OR infrastructure) when:7d') },
+      { name: 'Vision 2030', url: gn('"Vision 2030" (project OR investment OR announced) when:14d') },
+    ],
+    uaeBusiness: [
+      { name: 'Dubai Property Regulation', url: gn('(RERA OR DLD OR "Dubai Land Department" OR escrow OR off-plan) Dubai property when:14d') },
+      { name: 'Dubai Real Estate', url: gn('(Dubai real estate OR Dubai property OR UAE property OR "off-plan") when:7d') },
+      { name: 'UAE Business Intel', url: gn('site:gulfnews.com business (UAE OR Dubai OR Abu Dhabi) when:7d') },
+    ],
+    realEstateSaudi: [
+      { name: 'Saudi Real Estate', url: gn('("Saudi real estate" OR "Saudi property" OR "Riyadh property" OR "Jeddah property") when:7d') },
+      { name: 'Saudi Housing Policy', url: gn('(REGA OR "Real Estate General Authority" OR "Saudi housing" OR "Ministry of Municipalities and Housing") when:14d') },
+      { name: 'Saudi Foreign Ownership', url: gn('("foreign ownership" OR "non-Saudi ownership" OR "property ownership") Saudi real estate when:14d') },
+      { name: 'Vision 2030 Property', url: gn('("Vision 2030" OR PIF OR ROSHN OR NHC) (housing OR real estate OR property) when:14d') },
+    ],
+    realEstateUk: [
+      { name: 'UK House Prices', url: gn('("UK house prices" OR "UK property market" OR "UK housing market") when:7d') },
+      { name: 'UK HPI', url: gn('("UK House Price Index" OR "Land Registry HPI" OR "ONS house price index") when:14d') },
+      { name: 'UK Mortgage Market', url: gn('("UK mortgage rates" OR "Bank of England mortgage approvals" OR "UK rental market") when:7d') },
+      { name: 'UK Property Portals', url: gn('(Rightmove OR Zoopla OR RICS) ("house price" OR property OR rents) when:7d') },
+    ],
+    realEstateMiami: [
+      { name: 'Miami Real Estate', url: gn('("Miami real estate" OR "Miami property market" OR "South Florida real estate") when:7d') },
+      { name: 'Miami Luxury Property', url: gn('("Miami luxury real estate" OR "Miami condo inventory" OR "Miami foreign buyers") when:14d') },
+      { name: 'Miami Realtors', url: gn('site:miamirealtors.com (market report OR "Miami real estate") when:14d') },
+      { name: 'The Real Deal Miami', url: gn('site:therealdeal.com/miami (Miami OR "South Florida") real estate when:7d') },
+    ],
+    middleeast: [
+      { name: 'Gulf Security', url: gn('(Hormuz OR "Red Sea" OR Gulf OR Iran OR Israel OR Houthi OR airspace) when:2d') },
+      { name: 'Middle East Eye', url: 'https://www.middleeasteye.net/rss' },
+    ],
+  },
+
   happy: {
     positive: [
       { name: 'Good News Network', url: 'https://www.goodnewsnetwork.org/feed/' },

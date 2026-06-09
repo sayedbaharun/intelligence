@@ -205,6 +205,27 @@ export const FEEDS: Record<string, Feed[]> = {
     { name: 'ADGM Updates', url: rss('https://news.google.com/rss/search?q=ADGM+("Abu+Dhabi+Global+Market")+when:14d&hl=en-US&gl=US&ceid=US:en') },
   ],
 
+  realEstateSaudi: [
+    { name: 'Saudi Real Estate', url: rss('https://news.google.com/rss/search?q=("Saudi+real+estate"+OR+"Saudi+property"+OR+"Riyadh+property"+OR+"Jeddah+property")+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Saudi Housing Policy', url: rss('https://news.google.com/rss/search?q=(REGA+OR+"Real+Estate+General+Authority"+OR+"Saudi+housing"+OR+"Ministry+of+Municipalities+and+Housing")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Saudi Foreign Ownership', url: rss('https://news.google.com/rss/search?q=("foreign+ownership"+OR+"non-Saudi+ownership"+OR+"property+ownership")+Saudi+real+estate+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Vision 2030 Property', url: rss('https://news.google.com/rss/search?q=("Vision+2030"+OR+PIF+OR+ROSHN+OR+NHC)+(housing+OR+real+estate+OR+property)+when:14d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+
+  realEstateUk: [
+    { name: 'UK House Prices', url: rss('https://news.google.com/rss/search?q=("UK+house+prices"+OR+"UK+property+market"+OR+"UK+housing+market")+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'UK HPI', url: rss('https://news.google.com/rss/search?q=("UK+House+Price+Index"+OR+"Land+Registry+HPI"+OR+"ONS+house+price+index")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'UK Mortgage Market', url: rss('https://news.google.com/rss/search?q=("UK+mortgage+rates"+OR+"Bank+of+England+mortgage+approvals"+OR+"UK+rental+market")+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'UK Property Portals', url: rss('https://news.google.com/rss/search?q=(Rightmove+OR+Zoopla+OR+RICS)+("house+price"+OR+property+OR+rents)+when:7d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+
+  realEstateMiami: [
+    { name: 'Miami Real Estate', url: rss('https://news.google.com/rss/search?q=("Miami+real+estate"+OR+"Miami+property+market"+OR+"South+Florida+real+estate")+when:7d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Miami Luxury Property', url: rss('https://news.google.com/rss/search?q=("Miami+luxury+real+estate"+OR+"Miami+condo+inventory"+OR+"Miami+foreign+buyers")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'Miami Realtors', url: rss('https://news.google.com/rss/search?q=site:miamirealtors.com+(market+report+OR+"Miami+real+estate")+when:14d&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'The Real Deal Miami', url: rss('https://news.google.com/rss/search?q=site:therealdeal.com/miami+(Miami+OR+"South+Florida")+real+estate+when:7d&hl=en-US&gl=US&ceid=US:en') },
+  ],
+
   aiResearch: [
     { name: 'Hugging Face Blog', url: rss('https://huggingface.co/blog/feed.xml') },
     { name: 'OpenAI Blog', url: rss('https://news.google.com/rss/search?q=site:openai.com+blog+when:14d&hl=en-US&gl=US&ceid=US:en') },
